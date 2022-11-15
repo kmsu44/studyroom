@@ -10,12 +10,9 @@ import {
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import Timeblock from './Timeblock';
-import Modal from 'react-native-modal';
+import Booking from './Booking';
+import {PreventRemoveProvider, useNavigation} from '@react-navigation/native';
 function Studyroomcard(props) {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
   return (
     <View style={styles.card}>
       <View style={styles.content}>
@@ -27,18 +24,40 @@ function Studyroomcard(props) {
           <View>
             <Text style={styles.title}>{props.data.name}</Text>
             <Text style={styles.text}>
-              {props.data.time}개방 시간: {props.data.opentime}:00 ~{' '}
-              {props.data.closetime}:00
+              개방 시간: {props.data.opentime}:00 ~ {props.data.closetime}:00
             </Text>
             <Text style={styles.text}>
               사용 가능 인원 : {props.data.minuser}-{props.data.maxuser}명
             </Text>
             <Text style={styles.text}>이용 가능 시간 : 최대 2시간</Text>
           </View>
-          <TouchableOpacity style={styles.reservation} onPress={toggleModal}>
-            {/* <Modal isVisible={isModalVisible} backdropColor={'white'}>
-
-            </Modal> */}
+          <TouchableOpacity
+            style={styles.reservation}
+            onPress={
+              () =>
+                props.navigation.push('Booking', {
+                  screen: 'List',
+                  navigation: props.navigation,
+                  roomId: props.data.roomId,
+                  title: props.data.name,
+                  opentime: props.data.opentime,
+                  closetime: props.data.closetime,
+                  minuser: props.data.minuser,
+                  maxuser: props.data.maxuser,
+                  time: props.data.time,
+                })
+              // props.navigation.push('Booking', {
+              // navigation: props.navigation,
+              // roomId: props.data.roomId,
+              // title: props.data.name,
+              // opentime: props.data.opentime,
+              // closetime: props.data.closetime,
+              // minuser: props.data.minuser,
+              // maxuser: props.data.maxuser,
+              // time: props.data.time,
+              // })
+            }>
+            {/* <Booking /> */}
             <Text style={styles.reservationtext}>예약 가능</Text>
           </TouchableOpacity>
         </View>
@@ -189,11 +208,6 @@ const styles = StyleSheet.create({
     fontSize: 12 * scale,
     fontWeight: '600',
     lineHeight: 22 * height,
-  },
-  modal: {
-    height: 300 * height,
-    width: 300 * width,
-    backgroundColor: 'black',
   },
 });
 export default Studyroomcard;

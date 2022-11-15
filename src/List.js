@@ -131,11 +131,6 @@ const List = props => {
         {day_type[getDay(date)]}
       </Text>
       <View style={styles.box}>
-        {/* <MaterialCommunityIcons
-          name={'arrow-left'}
-          color={'#EA4F4F'}
-          size={30}
-        /> */}
         <TouchableOpacity style={styles.btn} onPress={toggleModal}>
           <Modal isVisible={isModalVisible} backdropColor={'white'}>
             <View style={styles.modal}>
@@ -184,6 +179,9 @@ const List = props => {
                     date={getDate(date)}
                     key={index.toString()}
                     value={index}
+                    navigation={props.navigation}
+                    starthour={starthour}
+                    endhour={endhour}
                   />
                 );
               }
@@ -205,6 +203,7 @@ const styles = StyleSheet.create({
   },
   main: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   container: {
     marginBottom: 50 * height,
