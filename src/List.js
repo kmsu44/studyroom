@@ -193,6 +193,7 @@ const List = props => {
           <ActivityIndicator size={'large'} />
         )}
       </View>
+      <Text>333</Text>
     </SafeAreaView>
   );
 };
