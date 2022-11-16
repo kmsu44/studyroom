@@ -182,6 +182,9 @@ const List = props => {
                     navigation={props.navigation}
                     starthour={starthour}
                     endhour={endhour}
+                    today={date}
+                    id={props.id}
+                    password={props.password}
                   />
                 );
               }

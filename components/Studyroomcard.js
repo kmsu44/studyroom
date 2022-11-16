@@ -13,6 +13,7 @@ import Timeblock from './Timeblock';
 import Booking from './Booking';
 import {PreventRemoveProvider, useNavigation} from '@react-navigation/native';
 function Studyroomcard(props) {
+  // console.log(props.user.id, props.password, props.today);
   return (
     <View style={styles.card}>
       <View style={styles.content}>
@@ -45,6 +46,10 @@ function Studyroomcard(props) {
                   minuser: props.data.minuser,
                   maxuser: props.data.maxuser,
                   time: props.data.time,
+                  date: props.date,
+                  id: props.id,
+                  password: props.password,
+                  today: props.today,
                 })
               // props.navigation.push('Booking', {
               // navigation: props.navigation,
