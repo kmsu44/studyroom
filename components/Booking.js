@@ -11,10 +11,14 @@ import {
   Image,
   ScrollView,
   TextInput,
+  LogBox,
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import axios from 'axios';
 import {getDate, getMonth, getYear} from 'date-fns';
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 const Booking = props => {
   const [users, setUsers] = useState({});
   const [name, setName] = useState();
@@ -84,7 +88,7 @@ const Booking = props => {
     getIpid(props.route.params.id, props.route.params.password);
   }, []);
   return (
-    <ScrollView style={styles.main}>
+    <ScrollView style={styles.main} indicatorStyle={'black'}>
       <View style={styles.container}>
         <View style={styles.card}>
           <View style={styles.content}>
@@ -146,7 +150,7 @@ const Booking = props => {
           <View style={styles.usercontainer}>
             {Object.keys(users).map(key => {
               return (
-                <View style={styles.usercard}>
+                <View style={styles.usercard} key={key} value={key}>
                   <Text style={styles.usertext}>{key}</Text>
                   <Text style={styles.usertext}>{users[key].name}</Text>
                 </View>

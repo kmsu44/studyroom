@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import axios from 'axios';
@@ -14,23 +15,20 @@ const Login = props => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const login = async (id, password) => {
-    console.log('요청');
     try {
       const response = await axios.get(
         `http://52.79.223.149/login/${id}/${password}`,
       );
       console.log(response.data);
       if (response.data.result === '1') {
-        console.log('로그인');
         props.setId(id);
         props.setPassword(password);
         props.setisLoggedIn(true);
+      } else {
+        Alert.alert('오류', '학번과 비밀번호가 올바르지 않습니다.');
       }
     } catch (error) {
-      console.error(error);
-    } finally {
-      // navigation.navigate('HomeScreen');
-      console.log('끝');
+      Alert.alert('오류', '서버 오류');
     }
   };
   return (

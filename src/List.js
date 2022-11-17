@@ -9,6 +9,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import Studyroomcard from '../components/Studyroomcard';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -33,15 +34,12 @@ const List = props => {
   const [studyroom, setStudyroom] = useState([]);
   const getTable = async () => {
     try {
-      console.log('시작');
-
       const response = await axios.get(
         `http://52.79.223.149/Table/${getYear(date)}/${getMonth(date)}`,
       );
       setStudyroom(response.data);
-      console.log('종료');
     } catch (error) {
-      console.error(error);
+      Alert.alert('오류', '서버오류');
     }
   };
 
@@ -92,6 +90,7 @@ const List = props => {
   const [number, setNumber] = useState(3);
   const [limit, setLimit] = useState(false);
   const search = data => {
+    // 사용자 인원 제한
     if (data.minuser > number || number > data.maxuser) {
       return false;
     }
@@ -168,6 +167,7 @@ const List = props => {
         {refreshing === false ? (
           <ScrollView
             style={styles.container}
+            indicatorStyle={'black'}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
