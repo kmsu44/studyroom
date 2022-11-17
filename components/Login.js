@@ -46,9 +46,6 @@ const Login = props => {
         placeholder={'ID'}
         onChangeText={id => {
           setId(id);
-          if (id.length >= 8) {
-            this.passwordInput.focus();
-          }
         }}
         maxLength={8}
         keyboardType="number-pad"
@@ -61,9 +58,6 @@ const Login = props => {
         keyboardType="default"
         returnKeyType={'default'}
         secureTextEntry={true}
-        ref={input => {
-          this.passwordInput = input;
-        }}
         onChangeText={password => {
           setPassword(password);
         }}></TextInput>

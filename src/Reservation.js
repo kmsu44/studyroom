@@ -62,7 +62,7 @@ const Reservation = props => {
       </View>
       <ScrollView>
         {test.map((data, index) => {
-          return <Reservationstatus data={data} />;
+          return <Reservationstatus data={data} key={index} value={index} />;
         })}
       </ScrollView>
     </View>
