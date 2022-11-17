@@ -1,4 +1,4 @@
-import {add, quartersInYear} from 'date-fns';
+import {add, quartersInYear, setHours} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
@@ -20,14 +20,52 @@ LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
 const Booking = props => {
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState([]);
   const [name, setName] = useState();
   const [sid, setSid] = useState();
   const [purpose, setPurpose] = useState();
   const [ipid, setIpid] = useState();
-  const [user, setUser] = useState({id: ' ', name: ' ', ipid: ' '});
-  const done = () => {
-    props.navigation.pop();
+  const [timelist, setTimelist] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [startHour, setStartHour] = useState('');
+  const hoursList = [1, 2];
+  const [hours, Sethours] = useState('');
+  const done = async (id, password) => {
+    let data = {
+      year: getYear(props.route.params.today),
+      month: getMonth(props.route.params.today) + 1,
+      day: getDate(props.route.params.today),
+      startHour: startHour,
+      closeTime: startHour,
+      hours: hours,
+      purpose: purpose,
+      mode: 'INSERT',
+      idx: Object.keys(users).length + 1,
+      ipid: ipid,
+      roomId: props.route.params.data.roomId,
+    };
+
+    users.map((tmp, index) => {
+      result = 'ipid' + (index + 1);
+      data[result] = tmp.ipid;
+    });
+
+    try {
+      const response = await axios.post(
+        `http://52.79.223.149/Reservation/${id}/${password}`,
+        data,
+      );
+      let result = response.data.result;
+      // console.log(typeof result);
+      if (result.includes('예약 완료')) {
+        Alert.alert(result);
+        props.route.params.navigation.pop();
+      } else {
+        Alert.alert(result);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   const getIpid = async (id, password) => {
     try {
@@ -37,6 +75,17 @@ const Booking = props => {
       setIpid(response.data);
     } catch (error) {
       console.error(error);
+    }
+  };
+  const getBooktime = async (roomId, year, month, day) => {
+    try {
+      const response = await axios.get(
+        `http://52.79.223.149/booktime/${roomId}/${year}/${month}/${day}`,
+      );
+      setTimelist(response.data);
+      setLoading(false);
+    } catch (error) {
+      Alert.alert('서버오류');
     }
   };
   const UserFind = async (id, password, sid, name, year, month, datee) => {
@@ -53,40 +102,57 @@ const Booking = props => {
       } else if (result == "id':'6") {
         Alert.alert('이미 스터디룸에 예약된 사람입니다.');
       } else {
-        if (sid in users) {
-          Alert.alert('이미 추가된 사용자 입니다.');
-        } else {
-          const newuser = {
-            ...users,
-            [sid]: {name: name, ipid: result},
-          };
-          setUsers(newuser);
-        }
+        const newuser = [...users];
+        newuser.push({sid: sid, name: name, ipid: result});
+        setUsers(newuser);
+
+        // }
       }
     } catch (error) {
       Alert.alert('서버오류');
     }
   };
+  const minus = sid => {
+    setUsers(users.filter(user => user.sid !== sid));
+  };
+
   const add = (id, password, today, maxuser) => {
+    let flag = 0;
     if (Object.keys(users).length == maxuser - 1) {
       Alert.alert('오류', '최대 사용 인원을 초과하였습니다.');
     } else {
-      UserFind(
-        id,
-        password,
-        sid,
-        name,
-        getYear(today),
-        getMonth(today) + 1,
-        getDate(today),
-      );
+      users.map(data => {
+        if (data.sid == sid) {
+          flag = 1;
+        }
+      });
+      if (flag == 1) {
+        Alert.alert('이미 추가한 이용자입니다.');
+      } else {
+        UserFind(
+          id,
+          password,
+          sid,
+          name,
+          getYear(today),
+          getMonth(today) + 1,
+          getDate(today),
+        );
+      }
     }
     setSid('');
     setName('');
   };
   useEffect(() => {
+    getBooktime(
+      props.route.params.data.roomId,
+      getYear(props.route.params.today),
+      getMonth(props.route.params.today) + 1,
+      getDate(props.route.params.today),
+    );
     getIpid(props.route.params.id, props.route.params.password);
   }, []);
+
   return (
     <ScrollView style={styles.main} indicatorStyle={'black'}>
       <View style={styles.container}>
@@ -97,15 +163,15 @@ const Booking = props => {
               style={styles.img}
             />
             <View style={styles.textcontainer}>
-              <Text style={styles.title}>{props.route.params.title}</Text>
+              <Text style={styles.title}>{props.route.params.data.name}</Text>
               <View style={styles.textinfo}>
                 <Text style={styles.text}>
-                  개방 시간: {props.route.params.opentime}
-                  :00 ~ {props.route.params.closetime}:00
+                  개방 시간: {props.route.params.data.opentime}
+                  :00 ~ {props.route.params.data.closetime}:00
                 </Text>
                 <Text style={styles.text}>
-                  사용 가능 인원 : {props.route.params.minuser}-
-                  {props.route.params.maxuser}명
+                  사용 가능 인원 : {props.route.params.data.minuser}-
+                  {props.route.params.data.maxuser}명
                 </Text>
                 <Text style={styles.text}>이용 가능 시간 : 최대 2시간</Text>
                 <Text style={styles.text}>예약시간 20분 경과시 이용 제한</Text>
@@ -114,10 +180,52 @@ const Booking = props => {
           </View>
         </View>
         <View style={styles.inputcontainer}>
+          <Text style={styles.inputtitle}>시작 시간</Text>
+          <View style={styles.starttimecontainer}>
+            {timelist.length > 0 ? (
+              timelist.map((data, index) => {
+                let box = styles.startbtn;
+                let text = styles.startbtn_text;
+                if (data === startHour) {
+                  box = styles._startbtn;
+                  text = styles._startbtn_text;
+                }
+                return (
+                  <TouchableOpacity
+                    style={box}
+                    value={index}
+                    key={index}
+                    onPress={() => setStartHour(data)}>
+                    <Text style={text}>{data > 12 ? data - 12 : data}:00</Text>
+                  </TouchableOpacity>
+                );
+              })
+            ) : (
+              <Text>로딩중...</Text>
+            )}
+          </View>
           <Text style={styles.inputtitle}>이용 시간</Text>
-          <Text style={styles.usetime}>이용시간 고민해봅시다</Text>
+          <View style={styles.starttimecontainer}>
+            {hoursList.map((data, index) => {
+              let box = styles.startbtn;
+              let text = styles.startbtn_text;
+              if (data === hours) {
+                box = styles._startbtn;
+                text = styles._startbtn_text;
+              }
+              return (
+                <TouchableOpacity
+                  style={box}
+                  value={index}
+                  key={index}
+                  onPress={() => Sethours(data)}>
+                  <Text style={text}>{data}시간</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
           <Text style={styles.inputtitle}>동반 이용자</Text>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             <TextInput
               value={sid}
               style={styles.nameinput}
@@ -141,18 +249,30 @@ const Booking = props => {
                   props.route.params.id,
                   props.route.params.password,
                   props.route.params.today,
-                  props.route.params.maxuser,
+                  props.route.params.data.maxuser,
                 );
               }}>
-              <Text style={styles.checkbtntext}>확인</Text>
+              <Text style={styles.checkbtntext}>추가</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.usercontainer}>
-            {Object.keys(users).map(key => {
+            {users.map((data, idx) => {
               return (
-                <View style={styles.usercard} key={key} value={key}>
-                  <Text style={styles.usertext}>{key}</Text>
-                  <Text style={styles.usertext}>{users[key].name}</Text>
+                <View style={styles.usercard} key={idx} value={idx}>
+                  <Text style={styles.usertext}>{data.sid}</Text>
+                  <Text style={styles.usertext}>{data.name}</Text>
+
+                  <TouchableOpacity
+                    style={styles.minusbtn}
+                    onPress={() => {
+                      minus(data.sid);
+                    }}>
+                    <MaterialCommunityIcons
+                      name="close-circle"
+                      color={'black'}
+                      size={16}
+                    />
+                  </TouchableOpacity>
                 </View>
               );
             })}
@@ -165,11 +285,17 @@ const Booking = props => {
             placeholderTextColor={'#8f8f8f'}
             multiline={true}
             onChangeText={purpose => {
-              setPurpose(purpose);
+              if (purpose.length < 500) {
+                setPurpose(purpose);
+              }
             }}></TextInput>
         </View>
         <View style={styles.donecontainer}>
-          <TouchableOpacity style={styles.done} onPress={done}>
+          <TouchableOpacity
+            style={styles.done}
+            onPress={() =>
+              done(props.route.params.id, props.route.params.password)
+            }>
             <Text style={styles.donetext}>예약하기</Text>
           </TouchableOpacity>
         </View>
@@ -237,7 +363,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffeaea',
   },
   nameinput: {
-    width: 130 * width,
+    width: 135 * width,
     height: 34 * height,
     backgroundColor: '#ffeaea',
     borderRadius: 8 * scale,
@@ -250,7 +376,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#b71a30',
     borderRadius: 8 * scale,
     justifyContent: 'center',
-    marginLeft: 12 * width,
+    marginLeft: 2 * width,
   },
   checkbtntext: {
     color: 'white',
@@ -262,7 +388,6 @@ const styles = StyleSheet.create({
     height: 200 * height,
     backgroundColor: '#ffeaea',
     borderRadius: 8 * scale,
-    marginRight: 10 * width,
     padding: 10 * scale,
   },
   donecontainer: {
@@ -284,17 +409,63 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   usercontainer: {
-    marginTop: 20,
+    width: 335 * width,
+    marginTop: 10 * height,
+    alignContent: 'flex-start',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    // borderWidth: 1,
   },
   usercard: {
+    width: 160 * width,
+    height: 30 * height,
     flexDirection: 'row',
-    height: 20 * height,
-    marginTop: 2,
+    marginTop: 5 * height,
+    marginRight: 5 * width,
+    backgroundColor: '#ECECEC',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderRadius: 8 * scale,
   },
   usertext: {
-    backgroundColor: '#ffeaea',
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: 20 * scale,
+  },
+  minusbtn: {
+    marginLeft: 5 * scale,
+  },
+  starttimecontainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+  },
+  startbtn: {
+    width: 105 * width,
+    height: 30 * height,
+    backgroundColor: '#ECECEC',
+    margin: 3 * scale,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8 * scale,
+  },
+  _startbtn: {
+    width: 105 * width,
+    height: 30 * height,
+    backgroundColor: '#FFA0A0',
+    margin: 3 * scale,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8 * scale,
+  },
+  startbtn_text: {
+    color: 'black',
+    fontWeight: '500',
+    letterSpacing: 1,
+  },
+  _startbtn_text: {
+    color: 'white',
+    fontWeight: '600',
+    letterSpacing: 1,
   },
 });
 export default Booking;

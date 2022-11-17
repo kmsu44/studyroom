@@ -185,6 +185,7 @@ const List = props => {
                     today={date}
                     id={props.id}
                     password={props.password}
+                    choice={date}
                   />
                 );
               }

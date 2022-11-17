@@ -39,17 +39,11 @@ function Studyroomcard(props) {
                 props.navigation.push('Booking', {
                   screen: 'List',
                   navigation: props.navigation,
-                  roomId: props.data.roomId,
-                  title: props.data.name,
-                  opentime: props.data.opentime,
-                  closetime: props.data.closetime,
-                  minuser: props.data.minuser,
-                  maxuser: props.data.maxuser,
-                  time: props.data.time,
-                  date: props.date,
+                  data: props.data,
                   id: props.id,
                   password: props.password,
                   today: props.today,
+                  choice: props.date,
                 })
               // props.navigation.push('Booking', {
               // navigation: props.navigation,
@@ -63,7 +57,7 @@ function Studyroomcard(props) {
               // })
             }>
             {/* <Booking /> */}
-            <Text style={styles.reservationtext}>예약 가능</Text>
+            <Text style={styles.reservationtext}>예약 버튼</Text>
           </TouchableOpacity>
         </View>
       </View>
