@@ -29,18 +29,18 @@ const Booking = props => {
   const [isLoading, setLoading] = useState(true);
   const [startHour, setStartHour] = useState('');
   const hoursList = [1, 2];
-  const [hours, Sethours] = useState('');
+  const [hours, Sethours] = useState(1);
   const done = async (id, password) => {
     let data = {
       year: getYear(props.route.params.today),
       month: getMonth(props.route.params.today) + 1,
       day: getDate(props.route.params.today),
       startHour: startHour,
-      closeTime: startHour,
+      closeTime: 20,
       hours: hours,
       purpose: purpose,
       mode: 'INSERT',
-      idx: Object.keys(users).length + 1,
+      idx: props.route.params.data.maxuser,
       ipid: ipid,
       roomId: props.route.params.data.roomId,
     };
@@ -49,14 +49,14 @@ const Booking = props => {
       result = 'ipid' + (index + 1);
       data[result] = tmp.ipid;
     });
-
+    console.log(data);
     try {
       const response = await axios.post(
         `http://52.79.223.149/Reservation/${id}/${password}`,
         data,
       );
       let result = response.data.result;
-      // console.log(typeof result);
+
       if (result.includes('예약 완료')) {
         Alert.alert(result);
         props.route.params.navigation.pop();
@@ -64,7 +64,7 @@ const Booking = props => {
         Alert.alert(result);
       }
     } catch (error) {
-      console.error(error);
+      Alert.alert('서버 오류');
     }
   };
   const getIpid = async (id, password) => {
@@ -74,7 +74,7 @@ const Booking = props => {
       );
       setIpid(response.data);
     } catch (error) {
-      console.error(error);
+      Alert.alert('서버 오류');
     }
   };
   const getBooktime = async (roomId, year, month, day) => {

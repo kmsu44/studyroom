@@ -48,6 +48,7 @@ const List = props => {
     getTable().then(() => {
       setRefreshing(false);
     });
+    countroom = 0;
   }, []);
   useEffect(() => {
     onRefresh();
@@ -89,6 +90,7 @@ const List = props => {
   const [endhour, setEndhour] = useState(22);
   const [number, setNumber] = useState(3);
   const [limit, setLimit] = useState(false);
+  let countroom = 0;
   const search = data => {
     // 사용자 인원 제한
     if (data.minuser > number || number > data.maxuser) {
@@ -120,6 +122,7 @@ const List = props => {
       }
     });
     if (cnt != 0) {
+      countroom += 1;
       return true;
     }
   };
@@ -186,10 +189,12 @@ const List = props => {
                     id={props.id}
                     password={props.password}
                     choice={date}
+                    day={getDay(date)}
                   />
                 );
               }
             })}
+            {countroom === 0 ? <Text>예약 가능한 방 없음</Text> : <View></View>}
           </ScrollView>
         ) : (
           <ActivityIndicator size={'large'} />

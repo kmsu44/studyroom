@@ -12,8 +12,13 @@ import {height, width, scale} from '../config/globalStyles';
 import Timeblock from './Timeblock';
 import Booking from './Booking';
 import {PreventRemoveProvider, useNavigation} from '@react-navigation/native';
+const time = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 function Studyroomcard(props) {
-  // console.log(props.user.id, props.password, props.today);
+  let closetime = props.data.closetime;
+  //토요일 개방시간
+  if (props.day === 6) {
+    closetime = 16;
+  }
   return (
     <View style={styles.card}>
       <View style={styles.content}>
@@ -25,7 +30,7 @@ function Studyroomcard(props) {
           <View>
             <Text style={styles.title}>{props.data.name}</Text>
             <Text style={styles.text}>
-              개방 시간: {props.data.opentime}:00 ~ {props.data.closetime}:00
+              개방 시간: {props.data.opentime}:00 ~ {closetime}:00
             </Text>
             <Text style={styles.text}>
               사용 가능 인원 : {props.data.minuser}-{props.data.maxuser}명
@@ -34,27 +39,15 @@ function Studyroomcard(props) {
           </View>
           <TouchableOpacity
             style={styles.reservation}
-            onPress={
-              () =>
-                props.navigation.push('Booking', {
-                  screen: 'List',
-                  navigation: props.navigation,
-                  data: props.data,
-                  id: props.id,
-                  password: props.password,
-                  today: props.today,
-                  choice: props.date,
-                })
-              // props.navigation.push('Booking', {
-              // navigation: props.navigation,
-              // roomId: props.data.roomId,
-              // title: props.data.name,
-              // opentime: props.data.opentime,
-              // closetime: props.data.closetime,
-              // minuser: props.data.minuser,
-              // maxuser: props.data.maxuser,
-              // time: props.data.time,
-              // })
+            onPress={() =>
+              props.navigation.push('Booking', {
+                screen: 'List',
+                navigation: props.navigation,
+                data: props.data,
+                id: props.id,
+                password: props.password,
+                today: props.today,
+              })
             }>
             {/* <Booking /> */}
             <Text style={styles.reservationtext}>예약 버튼</Text>
@@ -62,80 +55,24 @@ function Studyroomcard(props) {
         </View>
       </View>
       <View style={styles.bar}>
-        <View>
-          <Timeblock
-            time={'10'}
-            info={props.data.timetable[props.date - 1][0]}
-          />
-          <Text style={styles.time}>10</Text>
-        </View>
-        <View>
-          <Timeblock
-            time={'11'}
-            info={props.data.timetable[props.date - 1][1]}
-          />
-        </View>
-        <View>
-          <Timeblock
-            time={'12'}
-            info={props.data.timetable[props.date - 1][2]}
-          />
-          <Text style={styles.time}>12</Text>
-        </View>
-        <View>
-          <Timeblock
-            time={'13'}
-            info={props.data.timetable[props.date - 1][3]}
-          />
-        </View>
-        <View>
-          <Timeblock
-            time={'14'}
-            info={props.data.timetable[props.date - 1][4]}
-          />
-          <Text style={styles.time}>14</Text>
-        </View>
-        <View>
-          <Timeblock
-            time={'15'}
-            info={props.data.timetable[props.date - 1][5]}
-          />
-        </View>
-        <View>
-          <Timeblock
-            time={'16'}
-            info={props.data.timetable[props.date - 1][6]}
-          />
-          <Text style={styles.time}>16</Text>
-        </View>
-        <View>
-          <Timeblock
-            time={'17'}
-            info={props.data.timetable[props.date - 1][7]}
-          />
-        </View>
-        <View>
-          <Timeblock
-            time={'18'}
-            info={props.data.timetable[props.date - 1][8]}
-          />
-          <Text style={styles.time}>18</Text>
-        </View>
-        <View>
-          <Timeblock
-            time={'19'}
-            info={props.data.timetable[props.date - 1][9]}
-          />
-        </View>
-        <View>
-          <Timeblock
-            time={'20'}
-            info={props.data.timetable[props.date - 1][10]}
-          />
-          <View style={styles.row}>
-            <Text style={styles.time}>20</Text>
-          </View>
-        </View>
+        {time.map((data, index) => {
+          let timestyle = styles.time;
+          //짝수시간만 표시
+          if (data % 2 != 0) {
+            timestyle = styles.whitetime;
+          }
+          let infovalue = props.data.timetable[props.date - 1][index];
+          // 주말일경우 4시까지
+          if (props.day === 6 && index > 5) {
+            infovalue = ' ';
+          }
+          return (
+            <View key={index} value={index}>
+              <Timeblock time={data} info={infovalue} />
+              <Text style={timestyle}>{data}</Text>
+            </View>
+          );
+        })}
       </View>
     </View>
   );
@@ -188,6 +125,12 @@ const styles = StyleSheet.create({
     fontSize: 8,
     fontWeight: '400',
     letterSpacing: 0.6,
+  },
+  whitetime: {
+    fontSize: 8,
+    fontWeight: '400',
+    letterSpacing: 0.6,
+    color: 'white',
   },
   end: {
     textAlign: 'right',

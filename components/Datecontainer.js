@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
-import {getDate} from 'date-fns';
+import {getDate, getMonth} from 'date-fns';
 import {onChange} from 'react-native-reanimated';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Slider} from '@miblanchard/react-native-slider';
@@ -66,8 +66,11 @@ const Datecontainer = props => {
   const quit = () => {
     props.toggleModal();
     if (Choice_date === '') return;
+
+    if (getMonth(Choice_date) != getMonth(props.date)) {
+      props.onRefresh();
+    }
     props.setDate(Choice_date);
-    props.onRefresh();
     props.setEndhour(value[1]);
     props.setStarthour(value[0]);
     props.setLimit(limit);
