@@ -18,7 +18,6 @@ import {
   format,
   addDays,
 } from 'date-fns';
-import KakaoShareLink from 'react-native-kakao-share-link';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import {scale, width, height} from '../config/globalStyles';

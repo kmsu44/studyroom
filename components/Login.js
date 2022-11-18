@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 150 * width,
-    height: 150 * height,
+    width: 239 * width,
+    height: 232 * height,
   },
   info: {
     color: '#375066',
