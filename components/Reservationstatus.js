@@ -36,16 +36,6 @@ const Reservationstatus = props => {
   };
   return (
     <View style={styles.status}>
-      {/* <View>
-        <Text
-          style={{
-            fontSize: 15 * scale,
-            fontWeight: 'bold',
-          }}>
-          {'--월--일'} 예약
-        </Text>
-      </View> */}
-
       <View
         style={{
           height: 309 * height,
