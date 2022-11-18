@@ -1,6 +1,7 @@
 import {add, quartersInYear, setHours} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
   Alert,
   View,
@@ -12,10 +13,12 @@ import {
   ScrollView,
   TextInput,
   LogBox,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import axios from 'axios';
 import {getDate, getMonth, getYear, getDay} from 'date-fns';
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
@@ -170,9 +173,15 @@ const Booking = props => {
     );
     getIpid(props.route.params.id, props.route.params.password);
   }, []);
-
+  const [toggle, setToggle] = useState(true);
   return (
-    <ScrollView style={styles.main} indicatorStyle={'black'}>
+    <KeyboardAwareScrollView
+      style={styles.main}
+      keyboardShouldPersistTaps="always"
+      // innerRef={ref => {
+      //   this.scroll = ref;
+      // }}
+    >
       <View style={styles.container}>
         <View style={styles.card}>
           <View style={styles.content}>
@@ -198,7 +207,30 @@ const Booking = props => {
           </View>
         </View>
         <View style={styles.inputcontainer}>
-          <Text style={styles.inputtitle}>시작 시간</Text>
+          <View style={styles.infocontainer}>
+            <TouchableOpacity
+              style={styles.info}
+              onPress={() => setToggle(!toggle)}>
+              {toggle === false ? (
+                <MaterialCommunityIcons
+                  name="menu-up"
+                  color={'black'}
+                  size={30}
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="menu-down"
+                  color={'black'}
+                  size={30}
+                />
+              )}
+            </TouchableOpacity>
+          </View>
+          {toggle === false ? (
+            <Text style={styles.infotext}>{props.route.params.data.info}</Text>
+          ) : null}
+
+          <Text style={styles.inputtitle}>이용 가능 시간</Text>
           <View style={styles.starttimecontainer}>
             {timelist.length > 0 ? (
               timelist.map((data, index) => {
@@ -301,11 +333,11 @@ const Booking = props => {
             style={styles.purpose}
             placeholder={'사용 목적을 입력하세요.'}
             placeholderTextColor={'#8f8f8f'}
+            maxLength={500}
             multiline={true}
+            blurOnSubmit={true}
             onChangeText={purpose => {
-              if (purpose.length < 500) {
-                setPurpose(purpose);
-              }
+              setPurpose(purpose);
             }}></TextInput>
         </View>
         <View style={styles.donecontainer}>
@@ -318,12 +350,18 @@ const Booking = props => {
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({
+  infocontainer: {
+    alignItems: 'center',
+  },
+  info: {
+    width: 30,
+    height: 30,
+  },
   main: {
-    flex: 1,
     backgroundColor: '#FFFFFF',
   },
   container: {
@@ -362,7 +400,6 @@ const styles = StyleSheet.create({
     lineHeight: 22 * height,
     letterSpacing: 0.6 * width,
   },
-  inputcontainer: {},
   inputtitle: {
     marginBottom: 12 * height,
     marginTop: 12 * height,
@@ -403,10 +440,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   purpose: {
-    height: 200 * height,
+    flexWrap: 'wrap',
+    height: 100 * height,
     backgroundColor: '#ffeaea',
     borderRadius: 8 * scale,
     padding: 10 * scale,
+    textAlignVertical: 'top',
   },
   donecontainer: {
     alignItems: 'center',
@@ -484,6 +523,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600',
     letterSpacing: 1,
+  },
+  infotext: {
+    color: 'gray',
+    fontSize: 10,
   },
 });
 export default Booking;
