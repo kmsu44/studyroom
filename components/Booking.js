@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import axios from 'axios';
-import {getDate, getMonth, getYear} from 'date-fns';
+import {getDate, getMonth, getYear, getDay} from 'date-fns';
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
@@ -31,40 +31,56 @@ const Booking = props => {
   const hoursList = [1, 2];
   const [hours, Sethours] = useState(1);
   const done = async (id, password) => {
-    let data = {
-      year: getYear(props.route.params.today),
-      month: getMonth(props.route.params.today) + 1,
-      day: getDate(props.route.params.today),
-      startHour: startHour,
-      closeTime: 20,
-      hours: hours,
-      purpose: purpose,
-      mode: 'INSERT',
-      idx: props.route.params.data.maxuser,
-      ipid: ipid,
-      roomId: props.route.params.data.roomId,
-    };
-
-    users.map((tmp, index) => {
-      result = 'ipid' + (index + 1);
-      data[result] = tmp.ipid;
-    });
-    console.log(data);
-    try {
-      const response = await axios.post(
-        `http://52.79.223.149/Reservation/${id}/${password}`,
-        data,
+    if (purpose === '') {
+      Alert.alert('사용목적을 입력해주시기 바랍니다');
+    } else if (
+      props.route.params.data.minuser - 1 >
+      Object.keys(users).length
+    ) {
+      Alert.alert(
+        `최소 동반이용자는 ${props.route.params.data.minuser - 1}명 입니다`,
       );
-      let result = response.data.result;
+    } else if (
+      getDay(props.route.params.today) == 6 &&
+      startHour == 15 &&
+      hours == 2
+    ) {
+      Alert.alert('이용 시간을 확인해 주세요');
+    } else {
+      let data = {
+        year: getYear(props.route.params.today),
+        month: getMonth(props.route.params.today) + 1,
+        day: getDate(props.route.params.today),
+        startHour: startHour,
+        closeTime: 20,
+        hours: hours,
+        purpose: purpose,
+        mode: 'INSERT',
+        idx: props.route.params.data.maxuser,
+        ipid: ipid,
+        roomId: props.route.params.data.roomId,
+      };
+      users.map((tmp, index) => {
+        result = 'ipid' + (index + 1);
+        data[result] = tmp.ipid;
+      });
+      console.log(data);
+      try {
+        const response = await axios.post(
+          `http://52.79.223.149/Reservation/${id}/${password}`,
+          data,
+        );
+        let result = response.data.result;
 
-      if (result.includes('예약 완료')) {
-        Alert.alert(result);
-        props.route.params.navigation.pop();
-      } else {
-        Alert.alert(result);
+        if (result.includes('예약 완료')) {
+          Alert.alert(result);
+          props.route.params.navigation.pop();
+        } else {
+          Alert.alert(result);
+        }
+      } catch (error) {
+        Alert.alert('서버 오류');
       }
-    } catch (error) {
-      Alert.alert('서버 오류');
     }
   };
   const getIpid = async (id, password) => {
@@ -96,7 +112,7 @@ const Booking = props => {
       let result = response.data;
       // 정상 작동
       if (result == "id':'1") {
-        Alert.alert('오류', '이용자가 없습니다.');
+        Alert.alert('이용자가 없습니다.');
       } else if (result == "id':'3") {
         Alert.alert('본인의 학번으로는 신청할 수 없습니다.');
       } else if (result == "id':'6") {
@@ -128,6 +144,8 @@ const Booking = props => {
       });
       if (flag == 1) {
         Alert.alert('이미 추가한 이용자입니다.');
+      } else if (sid === '' || name === '') {
+        Alert.alert('입력을 다시 확인해주세요.');
       } else {
         UserFind(
           id,
