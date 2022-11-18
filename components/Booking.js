@@ -26,7 +26,7 @@ const Booking = props => {
   const [users, setUsers] = useState([]);
   const [name, setName] = useState();
   const [sid, setSid] = useState();
-  const [purpose, setPurpose] = useState();
+  const [purpose, setPurpose] = useState('');
   const [ipid, setIpid] = useState();
   const [timelist, setTimelist] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -34,7 +34,7 @@ const Booking = props => {
   const hoursList = [1, 2];
   const [hours, Sethours] = useState(1);
   const done = async (id, password) => {
-    if (purpose === '') {
+    if (purpose == '') {
       Alert.alert('사용목적을 입력해주시기 바랍니다');
     } else if (
       props.route.params.data.minuser - 1 >
@@ -215,13 +215,13 @@ const Booking = props => {
                 <MaterialCommunityIcons
                   name="menu-up"
                   color={'black'}
-                  size={30}
+                  size={45}
                 />
               ) : (
                 <MaterialCommunityIcons
                   name="menu-down"
                   color={'black'}
-                  size={30}
+                  size={45}
                 />
               )}
             </TouchableOpacity>
@@ -358,8 +358,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   info: {
-    width: 30,
-    height: 30,
+    width: 45 * width,
+    height: 45 * height,
   },
   main: {
     backgroundColor: '#FFFFFF',

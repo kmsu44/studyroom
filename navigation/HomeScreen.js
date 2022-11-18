@@ -86,12 +86,11 @@ const HomeScreen = props => {
           )}
         />
         <Tab.Screen
-          name="Home"
-          component={Home}
+          name="Reservation"
           options={{
             headerShown: false,
             tabBarShowLabel: false,
-
+            unmountOnBlur: true,
             tabBarIcon: ({focused, color}) => {
               color = focused ? '#b71a30' : '#b71a3099';
               return (
@@ -103,13 +102,17 @@ const HomeScreen = props => {
               );
             },
           }}
+          children={() => (
+            <Reservation id={props.id} password={props.password} />
+          )}
         />
         <Tab.Screen
-          name="Reservation"
+          name="Home"
+          component={Home}
           options={{
             headerShown: false,
             tabBarShowLabel: false,
-            unmountOnBlur: true,
+
             tabBarIcon: ({focused, color}) => {
               color = focused ? '#b71a30' : '#b71a3099';
               return (
@@ -121,9 +124,6 @@ const HomeScreen = props => {
               );
             },
           }}
-          children={() => (
-            <Reservation id={props.id} password={props.password} />
-          )}
         />
       </Tab.Group>
     </Tab.Navigator>
