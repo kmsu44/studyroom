@@ -72,7 +72,12 @@ const Login = props => {
         }}></TextInput>
 
       <TouchableOpacity style={styles.btn} onPress={() => login(id, password)}>
-        <Text style={{color: 'white', fontSize: 24, fontWeight: '600'}}>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 24,
+            fontFamily: 'Pretendard-SemiBold',
+          }}>
           Log In
         </Text>
       </TouchableOpacity>
@@ -92,10 +97,11 @@ const styles = StyleSheet.create({
   },
   info: {
     color: '#375066',
-    fontWeight: '500',
     marginTop: 20 * height,
+    fontFamily: 'Pretendard-Medium',
   },
   input: {
+    fontFamily: 'Pretendard-Medium',
     width: 319 * width,
     height: 48 * height,
     backgroundColor: '#ffeaea',

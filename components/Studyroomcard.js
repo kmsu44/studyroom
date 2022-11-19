@@ -37,21 +37,23 @@ function Studyroomcard(props) {
             </Text>
             <Text style={styles.text}>이용 가능 시간 : 최대 2시간</Text>
           </View>
-          <TouchableOpacity
-            style={styles.reservation}
-            onPress={() =>
-              props.navigation.push('Booking', {
-                screen: 'List',
-                navigation: props.navigation,
-                data: props.data,
-                id: props.id,
-                password: props.password,
-                today: props.today,
-              })
-            }>
-            {/* <Booking /> */}
-            <Text style={styles.reservationtext}>예약 버튼</Text>
-          </TouchableOpacity>
+          <View style={{alignItems: 'flex-start'}}>
+            <TouchableOpacity
+              style={styles.reservation}
+              onPress={() =>
+                props.navigation.push('Booking', {
+                  screen: 'List',
+                  navigation: props.navigation,
+                  data: props.data,
+                  id: props.id,
+                  password: props.password,
+                  today: props.today,
+                })
+              }>
+              {/* <Booking /> */}
+              <Text style={styles.reservationtext}>예약가능</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.bar}>
@@ -105,38 +107,43 @@ const styles = StyleSheet.create({
     marginLeft: 15 * width,
   },
   textcontainer: {
+    flex: 1,
     marginLeft: 16 * width,
+    // marginLeft: 20 * width,
     justifyContent: 'space-between',
   },
   text: {
     fontSize: 10 * scale,
-    fontWeight: '400',
+    fontFamily: 'Pretendard-Regular',
     lineHeight: 14 * height,
     letterSpacing: 1.4 * scale,
+    marginTop: 2 * scale,
     color: '#4A4A4A',
   },
   title: {
-    fontSize: 14 * scale,
-    fontWeight: '600',
+    fontSize: 12.5 * scale,
+    fontFamily: 'Pretendard-SemiBold',
     lineHeight: 22,
     letterSpacing: 0.6,
   },
   time: {
     fontSize: 8,
-    fontWeight: '400',
+    fontFamily: 'Pretendard-SemiBold',
     letterSpacing: 0.6,
+    marginLeft: -4 * scale,
+    marginTop: 2 * scale,
   },
   whitetime: {
     fontSize: 8,
-    fontWeight: '400',
+    fontFamily: 'Pretendard-Regular',
     letterSpacing: 0.6,
     color: 'white',
   },
   end: {
     textAlign: 'right',
-    fontSize: 8,
-    fontWeight: '400',
-    letterSpacing: 0.6,
+    fontSize: 8 * scale,
+    fontFamily: 'Pretendard-Regular',
+    letterSpacing: 0.6 * scale,
   },
   reservation: {
     backgroundColor: '#FFEAEA',
@@ -148,8 +155,9 @@ const styles = StyleSheet.create({
   },
   reservationtext: {
     fontSize: 12 * scale,
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
     lineHeight: 22 * height,
+    letterSpacing: 2 * scale,
   },
 });
 export default Studyroomcard;

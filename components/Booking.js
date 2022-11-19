@@ -49,7 +49,11 @@ const Booking = props => {
       hours == 2
     ) {
       Alert.alert('이용 시간을 확인해 주세요');
-    } else {
+    }
+    // else if(roomId === ){
+
+    // }
+    else {
       let data = {
         year: getYear(props.route.params.today),
         month: getMonth(props.route.params.today) + 1,
@@ -208,23 +212,28 @@ const Booking = props => {
               style={styles.info}
               onPress={() => setToggle(!toggle)}>
               {toggle === false ? (
-                <MaterialCommunityIcons
-                  name="menu-up"
-                  color={'black'}
-                  size={45}
-                />
+                <View style={styles.infocontainer}>
+                  <Text style={styles.infotext}>
+                    {props.route.params.data.info}
+                  </Text>
+                  <MaterialCommunityIcons
+                    name="menu-up"
+                    color={'black'}
+                    size={30}
+                  />
+                </View>
               ) : (
                 <MaterialCommunityIcons
                   name="menu-down"
                   color={'black'}
-                  size={45}
+                  size={30}
                 />
               )}
             </TouchableOpacity>
           </View>
-          {toggle === false ? (
-            <Text style={styles.infotext}>{props.route.params.data.info}</Text>
-          ) : null}
+          {/* {toggle === false ? (
+            
+          ) : null} */}
 
           <Text style={styles.inputtitle}>이용 가능 시간</Text>
           <View style={styles.starttimecontainer}>
@@ -353,10 +362,6 @@ const styles = StyleSheet.create({
   infocontainer: {
     alignItems: 'center',
   },
-  info: {
-    width: 45 * width,
-    height: 45 * height,
-  },
   main: {
     backgroundColor: '#FFFFFF',
   },
@@ -385,28 +390,22 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12 * scale,
-    fontWeight: '400',
+    fontFamily: 'Pretendard-Regular',
     lineHeight: 18 * height,
     letterSpacing: 0.6 * scale,
     color: '#4A4A4A',
   },
   title: {
-    fontSize: 18 * scale,
-    fontWeight: '600',
+    fontSize: 15 * scale,
+    fontFamily: 'Pretendard-SemiBold',
     lineHeight: 22 * height,
     letterSpacing: 0.6 * width,
   },
   inputtitle: {
-    marginBottom: 12 * height,
-    marginTop: 12 * height,
     fontSize: 16 * scale,
-  },
-  inputtitle: {
-    fontSize: 16 * scale,
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
     lineHeight: 22 * height,
     marginBottom: 8 * height,
-    marginTop: 20 * height,
   },
   usetime: {
     width: 335 * width,
@@ -433,7 +432,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 12 * scale,
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
   },
   purpose: {
     flexWrap: 'wrap',
@@ -459,7 +458,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
   },
   usercontainer: {
     width: 335 * width,
@@ -488,6 +487,7 @@ const styles = StyleSheet.create({
     marginLeft: 5 * scale,
   },
   starttimecontainer: {
+    marginBottom: 10 * height,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
@@ -512,17 +512,19 @@ const styles = StyleSheet.create({
   },
   startbtn_text: {
     color: 'black',
-    fontWeight: '500',
+    fontFamily: 'Pretendard-Medium',
     letterSpacing: 1,
   },
   _startbtn_text: {
     color: 'white',
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
     letterSpacing: 1,
   },
   infotext: {
     color: 'gray',
-    fontSize: 10,
+    fontSize: 10 * scale,
+    fontFamily: 'Pretendard-Regular',
+    marginTop: 10 * height,
   },
 });
 export default Booking;

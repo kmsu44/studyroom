@@ -28,6 +28,9 @@ const MainStack = props => {
         name="Booking"
         options={{
           title: '스터디룸 예약',
+          headerTitleStyle: {
+            fontFamily: 'Pretendard-SemiBold',
+          },
           headerLeft: navigation => (
             <TouchableOpacity
               style={styles.btn}

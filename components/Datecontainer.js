@@ -86,6 +86,7 @@ const Datecontainer = props => {
     0: '일',
   };
   const [value, setValue] = useState([props.starthour, props.endhour]);
+  const timelist = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
   return (
     <View style={styles.container}>
       <Text style={styles.title}>날짜</Text>
@@ -162,92 +163,32 @@ const Datecontainer = props => {
       )}
 
       <View style={styles.timeinfo}>
-        <View>
-          <Text>10</Text>
-        </View>
-        <View>
-          <Text>11</Text>
-        </View>
-        <View>
-          <Text>12</Text>
-        </View>
-        <View>
-          <Text>13</Text>
-        </View>
-        <View>
-          <Text>14</Text>
-        </View>
-        <View>
-          <Text>15</Text>
-        </View>
-        <View>
-          <Text>16</Text>
-        </View>
-        <View>
-          <Text>17</Text>
-        </View>
-        <View>
-          <Text>18</Text>
-        </View>
-        <View>
-          <Text>19</Text>
-        </View>
-        <View>
-          <Text>20</Text>
-        </View>
-        <View>
-          <Text>21</Text>
-        </View>
+        {timelist.map((data, index) => {
+          let style = styles.timeinfostyle;
+          return (
+            <View key={index} style={{}}>
+              <Text style={style}>{data}</Text>
+            </View>
+          );
+        })}
       </View>
-      {/* <View style={styles.timecontainer}>
-        <View style={styles.timebox}>
-          <Text style={styles.timetitle}>시작 시간</Text>
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={styles.btn2}
-              onPress={() => decreasetime()}>
-              <MaterialCommunityIcons name="minus" color={'black'} size={16} />
-            </TouchableOpacity>
-            <Text style={styles.time}>{starthour}</Text>
-            <TouchableOpacity
-              style={styles.btn2}
-              onPress={() => increasetime()}>
-              <MaterialCommunityIcons name="plus" color={'black'} size={16} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <MaterialCommunityIcons
-          name="clock-outline"
-          color={'#DD8D8D'}
-          size={25}
-          style={styles.clock}
-        />
-        <View style={styles.timebox}>
-          <Text style={styles.timetitle}>종료 시간</Text>
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={styles.btn2}
-              onPress={() => decreaseendtime()}>
-              <MaterialCommunityIcons name="minus" color={'black'} size={16} />
-            </TouchableOpacity>
-            <Text style={styles.time}>{endhour}</Text>
-            <TouchableOpacity
-              style={styles.btn2}
-              onPress={() => increaseendtime()}>
-              <MaterialCommunityIcons name="plus" color={'black'} size={16} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View> */}
 
       <Text style={styles.title}>인원 수</Text>
       <View style={styles.numbercontainer}>
         <TouchableOpacity style={styles.btn2} onPress={() => decreasenumber()}>
-          <MaterialCommunityIcons name="minus" color={'black'} size={16} />
+          <MaterialCommunityIcons
+            name="minus-circle-outline"
+            color={'black'}
+            size={16}
+          />
         </TouchableOpacity>
         <Text style={styles.number}>{number}명</Text>
         <TouchableOpacity style={styles.btn2} onPress={() => increasenumber()}>
-          <MaterialCommunityIcons name="plus" color={'black'} size={16} />
+          <MaterialCommunityIcons
+            name="plus-circle-outline"
+            color={'black'}
+            size={16}
+          />
         </TouchableOpacity>
       </View>
 
@@ -294,20 +235,20 @@ const styles = StyleSheet.create({
   selectedtext: {
     color: 'white',
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
     marginTop: 5 * height,
     marginBottom: 5 * height,
   },
   daytext: {
     color: '#6C6C6C',
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
     marginTop: 5 * height,
     marginBottom: 5 * height,
   },
   title: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
     lineHeight: 22,
     letterSpacing: 0.6,
   },
@@ -326,7 +267,7 @@ const styles = StyleSheet.create({
   },
   number: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
     color: '#FF5656',
     letterSpacing: 0.6,
     lineHeight: 22,
@@ -342,7 +283,7 @@ const styles = StyleSheet.create({
   time: {
     color: '#FF5656',
     fontSize: 17,
-    fontWeight: '500',
+    fontFamily: 'Pretendard-Medium',
     marginLeft: 6 * width,
     marginRight: 6 * width,
     letterSpacing: 0.6,
@@ -361,7 +302,7 @@ const styles = StyleSheet.create({
   },
   timetitle: {
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: 'Pretendard-Medium',
     letterSpacing: 0.6,
     lineHeight: 22,
   },
@@ -383,7 +324,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   btntext: {
-    fontWeight: '600',
+    fontFamily: 'Pretendard-SemiBold',
     fontSize: 14,
     color: '#FFFFFF',
     letterSpacing: 0.6,
@@ -396,8 +337,8 @@ const styles = StyleSheet.create({
     marginBottom: 13 * height,
   },
   limittext: {
-    fontWeight: '500',
     fontSize: 14,
+    fontFamily: 'Pretendard-Medium',
     color: '#353535',
     letterSpacing: 0.6,
     lineHeight: 22,
@@ -410,8 +351,9 @@ const styles = StyleSheet.create({
   },
   timeinfo: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     marginBottom: 20 * height,
+    marginTop: -5 * height,
   },
   trackmarks: {
     width: 1.5 * width,
@@ -419,6 +361,15 @@ const styles = StyleSheet.create({
     height: 8 * height,
     backgroundColor: 'white',
     marginLeft: 10 * width,
+  },
+  timeinfostyle: {
+    fontSize: 11 * scale,
+    fontFamily: 'Pretendard-SemiBold',
+  },
+  _timeinfostyle: {
+    fontSize: 11 * scale,
+    fontFamily: 'Pretendard-SemiBold',
+    color: 'white',
   },
 });
 export default Datecontainer;
