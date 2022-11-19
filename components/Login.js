@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -11,6 +12,7 @@ import {
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import axios from 'axios';
+
 const Login = props => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +33,7 @@ const Login = props => {
           props.setisLoggedIn(true);
         } else {
           Alert.alert('학번과 비밀번호가 올바르지 않습니다.');
+          setPassword('');
         }
       } catch (error) {
         Alert.alert('서버 오류');
@@ -49,23 +52,25 @@ const Login = props => {
       <TextInput
         value={id}
         style={styles.input}
-        placeholder={'ID'}
+        placeholder={'아이디'}
+        placeholderTextColor={'#8F8F8F'}
         onChangeText={id => {
           setId(id);
         }}
         maxLength={8}
-        keyboardType="number-pad"
         bulrOnSubmit={false}></TextInput>
 
       <TextInput
         value={password}
         style={styles.input}
-        placeholder={'Password'}
+        placeholder={'비밀번호'}
+        placeholderTextColor={'#8F8F8F'}
         returnKeyType={'default'}
         secureTextEntry={true}
         onChangeText={password => {
           setPassword(password);
         }}></TextInput>
+
       <TouchableOpacity style={styles.btn} onPress={() => login(id, password)}>
         <Text style={{color: 'white', fontSize: 24, fontWeight: '600'}}>
           Log In
@@ -82,8 +87,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 239 * width,
-    height: 232 * height,
+    width: 150 * width,
+    height: 150 * height,
   },
   info: {
     color: '#375066',
@@ -104,7 +109,7 @@ const styles = StyleSheet.create({
     height: 54 * height,
     backgroundColor: '#cd2719',
     borderRadius: 16,
-    marginTop: 20 * width,
+    marginTop: 20 * height,
     justifyContent: 'center',
     alignItems: 'center',
   },

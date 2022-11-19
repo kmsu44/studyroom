@@ -177,11 +177,7 @@ const Booking = props => {
   return (
     <KeyboardAwareScrollView
       style={styles.main}
-      keyboardShouldPersistTaps="always"
-      // innerRef={ref => {
-      //   this.scroll = ref;
-      // }}
-    >
+      keyboardShouldPersistTaps="always">
       <View style={styles.container}>
         <View style={styles.card}>
           <View style={styles.content}>
