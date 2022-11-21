@@ -19,7 +19,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {scale, width, height} from '../config/globalStyles';
 import Reservationstatus from '../components/Reservationstatus';
 import {map} from 'react-native-cheerio/lib/api/traversing';
-import {withRepeat} from 'react-native-reanimated';
 
 const Reservation = props => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -100,6 +99,7 @@ const styles = StyleSheet.create({
     width: 342 * width,
     backgroundColor: '#FFFFFF',
     marginTop: 69 * height,
+    marginBottom: 10 * height,
     marginLeft: 16 * scale,
     marginRight: 16 * scale,
     justifyContent: 'center',

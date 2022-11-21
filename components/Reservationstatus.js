@@ -34,11 +34,44 @@ const Reservationstatus = props => {
     6: '토요일',
     0: '일요일',
   };
+  // const Remove = async (id, password, roomId, cancelMsg, bookingId) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://52.79.223.149/Remove/${id}/${password}/${roomId}/${cancelMsg}/${bookingId}`,
+  //     );
+  //     setTest(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setload(1);
+  //     console.log('success!');
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   onRefresh();
+  //   Remove(
+  //     props.id,
+  //     props.password,
+  //     props.roomId,
+  //     props.cancelMsg,
+  //     props.bookingId,
+  //   );
+  // }, []);
+
   return (
+    // if ({props.data.title} === {'대양 AI 콜라보랩 Talk Room3'}){
+    //   styles.status.height = 200;
+    // }
+    // if ({props.data.title} === {'24 스터디룸(4층)_당일예약)'}){
+    //   styles.status.height = 200;
+    // }
+
     <View style={styles.status}>
       <View
         style={{
-          height: 309 * height,
+          //height: 309 * height,
           width: 139 * width,
           flexDirection: 'row',
         }}>
@@ -140,7 +173,7 @@ const styles = StyleSheet.create({
   status: {
     backgroundColor: 'white',
     padding: 16 * scale,
-    height: 167 * height,
+    //height: 167 * height,
     width: 342 * width,
     borderRadius: 16,
     marginTop: 29 * scale,
