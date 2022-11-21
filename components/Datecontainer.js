@@ -119,7 +119,14 @@ const Datecontainer = props => {
       <View style={styles.limit}>
         <Text style={styles.title}>시간</Text>
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => Limitswitch()}>
+          <TouchableOpacity
+            style={{
+              width: 30 * width,
+              height: 30 * height,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => Limitswitch()}>
             <MaterialCommunityIcons
               name={
                 limit === false ? 'circle-outline' : 'checkbox-marked-circle'
@@ -145,8 +152,8 @@ const Datecontainer = props => {
           }}
           step={1}
           thumbTouchSize={{
-            width: 50,
-            height: 40,
+            width: 35,
+            height: 35,
           }}
           trackClickable={true}
           onValueChange={value => setValue(value)}
@@ -206,7 +213,6 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     width: width * 345,
-    height: height * 380,
     borderRadius: 12,
     padding: 20 * scale,
   },
@@ -264,9 +270,10 @@ const styles = StyleSheet.create({
   numbercontainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   number: {
-    fontSize: 16,
+    fontSize: 12 * scale,
     fontFamily: 'Pretendard-SemiBold',
     color: '#FF5656',
     letterSpacing: 0.6,
@@ -337,11 +344,11 @@ const styles = StyleSheet.create({
     marginBottom: 13 * height,
   },
   limittext: {
-    fontSize: 14,
+    fontSize: 14 * scale,
     fontFamily: 'Pretendard-Medium',
     color: '#353535',
-    letterSpacing: 0.6,
-    lineHeight: 22,
+    letterSpacing: 0.6 * scale,
+    lineHeight: 22 * scale,
   },
   btn2: {
     width: 30 * width,
@@ -363,7 +370,8 @@ const styles = StyleSheet.create({
     marginLeft: 10 * width,
   },
   timeinfostyle: {
-    fontSize: 11 * scale,
+    color: '#6C6C6C',
+    fontSize: 8 * scale,
     fontFamily: 'Pretendard-SemiBold',
   },
   _timeinfostyle: {

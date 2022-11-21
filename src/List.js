@@ -33,6 +33,7 @@ const List = props => {
   const [isLoading, setLoading] = useState(0);
   const [studyroom, setStudyroom] = useState([]);
   const getTable = async () => {
+    setRefreshing(true);
     try {
       const response = await axios.get(
         `http://52.79.223.149/Table/${getYear(date)}/${getMonth(date)}`,
@@ -41,13 +42,11 @@ const List = props => {
     } catch (error) {
       Alert.alert('오류', '서버오류');
     }
+    setRefreshing(false);
   };
 
   const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    getTable().then(() => {
-      setRefreshing(false);
-    });
+    getTable();
     countroom = 0;
   }, []);
   useEffect(() => {
@@ -167,38 +166,38 @@ const List = props => {
         </TouchableOpacity>
       </View>
       <View style={styles.refresh}>
-        {refreshing === false ? (
-          <ScrollView
-            style={styles.container}
-            indicatorStyle={'black'}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-            {studyroom.map((data, index) => {
-              if (search(data)) {
-                return (
-                  <Studyroomcard
-                    data={data}
-                    date={getDate(date)}
-                    key={index.toString()}
-                    value={index}
-                    navigation={props.navigation}
-                    starthour={starthour}
-                    endhour={endhour}
-                    today={date}
-                    id={props.id}
-                    password={props.password}
-                    choice={date}
-                    day={getDay(date)}
-                  />
-                );
-              }
-            })}
-            {countroom === 0 ? <Text>예약 가능한 방 없음</Text> : <View></View>}
-          </ScrollView>
-        ) : (
-          <ActivityIndicator size={'large'} />
-        )}
+        <ScrollView
+          style={styles.container}
+          indicatorStyle={'black'}
+          refreshControl={
+            <RefreshControl
+              progressViewOffset={1}
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }>
+          {studyroom.map((data, index) => {
+            if (search(data)) {
+              return (
+                <Studyroomcard
+                  data={data}
+                  date={getDate(date)}
+                  key={index.toString()}
+                  value={index}
+                  navigation={props.navigation}
+                  starthour={starthour}
+                  endhour={endhour}
+                  today={date}
+                  id={props.id}
+                  password={props.password}
+                  choice={date}
+                  day={getDay(date)}
+                />
+              );
+            }
+          })}
+          {countroom === 0 ? <Text>예약 가능한 방 없음</Text> : <View></View>}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -206,7 +205,6 @@ const List = props => {
 const styles = StyleSheet.create({
   refresh: {
     height: 620 * height,
-    width: 375 * width,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -216,8 +214,6 @@ const styles = StyleSheet.create({
   },
   container: {
     marginBottom: 50 * height,
-    height: 620 * height,
-    width: 375 * width,
   },
   timelist: {
     fontFamily: 'Pretendard-Medium',

@@ -51,7 +51,7 @@ function Studyroomcard(props) {
                 })
               }>
               {/* <Booking /> */}
-              <Text style={styles.reservationtext}>예약가능</Text>
+              <Text style={styles.reservationtext}>예약</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -81,9 +81,9 @@ function Studyroomcard(props) {
 }
 const styles = StyleSheet.create({
   card: {
-    height: height * 190,
+    height: height * 200,
+    width: 335 * width,
     borderTopWidth: 0.8,
-    borderBottomWidth: 0.8,
     borderColor: '#D1D1D1',
     marginRight: 19.5 * width,
     marginLeft: 19.5 * width,
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
   textcontainer: {
     flex: 1,
     marginLeft: 16 * width,
-    // marginLeft: 20 * width,
     justifyContent: 'space-between',
   },
   text: {
@@ -117,14 +116,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Pretendard-Regular',
     lineHeight: 14 * height,
     letterSpacing: 1.4 * scale,
-    marginTop: 2 * scale,
     color: '#4A4A4A',
   },
   title: {
-    fontSize: 12.5 * scale,
+    fontSize: 12.4 * scale,
     fontFamily: 'Pretendard-SemiBold',
-    lineHeight: 22,
-    letterSpacing: 0.6,
+    lineHeight: 22 * height,
+    letterSpacing: 0.6 * scale,
   },
   time: {
     fontSize: 8,
