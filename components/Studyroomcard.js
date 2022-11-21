@@ -11,7 +11,6 @@ import {
 import {height, width, scale} from '../config/globalStyles';
 import Timeblock from './Timeblock';
 import Booking from './Booking';
-import {PreventRemoveProvider, useNavigation} from '@react-navigation/native';
 const time = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 function Studyroomcard(props) {
   let closetime = props.data.closetime;
