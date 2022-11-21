@@ -29,7 +29,12 @@ const AppStackNavi = () => {
         name="HomeScreen"
         options={{headerShown: false}}
         children={({navigation}) => (
-          <HomeScreen navigation={navigation} id={id} password={password} />
+          <HomeScreen
+            navigation={navigation}
+            id={id}
+            password={password}
+            setisLoggedIn={setisLoggedIn}
+          />
         )}
       />
     </Stack.Navigator>

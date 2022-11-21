@@ -1,42 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
   StyleSheet,
-  ActivityIndicator,
   RefreshControl,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import Studyroomcard from '../components/Studyroomcard';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Modal from 'react-native-modal';
 import axios from 'axios';
-import {
-  getDate,
-  startOfWeek,
-  getMonth,
-  getDay,
-  getYear,
-  format,
-  addDays,
-} from 'date-fns';
+import {getDate, getMonth, getDay, getYear, format, addDays} from 'date-fns';
 import Datecontainer from '../components/Datecontainer';
 import {height, scale, width} from '../config/globalStyles';
 const List = props => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [data, setData] = useState([]);
-  const [html, setHtml] = useState([]);
-  const [isLoading, setLoading] = useState(0);
   const [studyroom, setStudyroom] = useState([]);
-  const getTable = async () => {
+  const getTable = async (year, month) => {
     setRefreshing(true);
     try {
       const response = await axios.get(
-        `http://52.79.223.149/Table/${getYear(date)}/${getMonth(date)}`,
+        `http://52.79.223.149/Table/${year}/${month}`,
       );
       setStudyroom(response.data);
     } catch (error) {
@@ -45,12 +33,12 @@ const List = props => {
     setRefreshing(false);
   };
 
-  const onRefresh = React.useCallback(() => {
-    getTable();
+  const onRefresh = React.useCallback(date => {
+    getTable(getYear(date), getMonth(date));
     countroom = 0;
   }, []);
   useEffect(() => {
-    onRefresh();
+    onRefresh(date);
     const weekDays = getWeekDays(date);
     setWeek(weekDays);
   }, []);
@@ -166,38 +154,70 @@ const List = props => {
         </TouchableOpacity>
       </View>
       <View style={styles.refresh}>
-        <ScrollView
-          style={styles.container}
-          indicatorStyle={'black'}
-          refreshControl={
-            <RefreshControl
-              progressViewOffset={1}
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }>
-          {studyroom.map((data, index) => {
-            if (search(data)) {
-              return (
-                <Studyroomcard
-                  data={data}
-                  date={getDate(date)}
-                  key={index.toString()}
-                  value={index}
-                  navigation={props.navigation}
-                  starthour={starthour}
-                  endhour={endhour}
-                  today={date}
-                  id={props.id}
-                  password={props.password}
-                  choice={date}
-                  day={getDay(date)}
-                />
-              );
-            }
-          })}
-          {countroom === 0 ? <Text>예약 가능한 방 없음</Text> : <View></View>}
-        </ScrollView>
+        {refreshing === true ? (
+          <ActivityIndicator size={'large'} />
+        ) : (
+          <ScrollView
+            style={styles.container}
+            indicatorStyle={'black'}
+            refreshControl={
+              <RefreshControl
+                progressViewOffset={1}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
+            }>
+            {studyroom.map((data, index) => {
+              if (search(data)) {
+                return (
+                  <Studyroomcard
+                    data={data}
+                    date={getDate(date)}
+                    key={index.toString()}
+                    value={index}
+                    navigation={props.navigation}
+                    starthour={starthour}
+                    endhour={endhour}
+                    today={date}
+                    id={props.id}
+                    password={props.password}
+                    choice={date}
+                    day={getDay(date)}
+                  />
+                );
+              }
+            })}
+            {countroom === 0 ? (
+              <View
+                style={{
+                  height: 573 * height,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    backgroundColor: '#FFEAEA',
+                    width: 280 * width,
+                    height: height * 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 12 * scale,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'Pretendard-Medium',
+                      fontSize: 16,
+                      letterSpacing: 0.6 * scale,
+                    }}>
+                    예약 가능한 스터디룸이 없습니다.
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <View></View>
+            )}
+          </ScrollView>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -217,11 +237,11 @@ const styles = StyleSheet.create({
   },
   timelist: {
     fontFamily: 'Pretendard-Medium',
-    textAlign: 'center',
     fontSize: 16,
-    lineHeight: 22,
-    marginTop: 16 * height,
     letterSpacing: 0.6 * scale,
+    textAlign: 'center',
+    marginTop: 16 * height,
+    lineHeight: 22,
   },
   hourlist: {
     textAlign: 'center',

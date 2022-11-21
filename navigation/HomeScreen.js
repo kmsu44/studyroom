@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import List from '../src/List';
-import Home from '../src/Home';
+import Info from '../src/Info';
 import Reservation from '../src/Reservation';
 import {height, width, scale} from '../config/globalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -110,8 +110,7 @@ const HomeScreen = props => {
           )}
         />
         <Tab.Screen
-          name="Home"
-          component={Home}
+          name="Info"
           options={{
             headerShown: false,
             tabBarShowLabel: false,
@@ -127,6 +126,12 @@ const HomeScreen = props => {
               );
             },
           }}
+          children={() => (
+            <Info
+              setisLoggedIn={props.setisLoggedIn}
+              navigation={props.navigation}
+            />
+          )}
         />
       </Tab.Group>
     </Tab.Navigator>

@@ -11,6 +11,7 @@ import {
   Image,
   ScrollView,
   RefreshControl,
+  Alert,
 } from 'react-native';
 
 import axios from 'axios';
@@ -23,20 +24,14 @@ import {map} from 'react-native-cheerio/lib/api/traversing';
 const Reservation = props => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [test, setTest] = useState([]);
-  const [load, setload] = useState(0);
-
   const checklist = async (id, password) => {
     try {
       const response = await axios.get(
         `http://52.79.223.149/checklist/${id}/${password}`,
       );
       setTest(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.error(error);
-    } finally {
-      setload(1);
-      console.log('success!');
+      Alert.alert('서버오류');
     }
   };
 
@@ -53,7 +48,7 @@ const Reservation = props => {
   }, []);
 
   return (
-    <View style={styles.top}>
+    <SafeAreaView style={styles.top}>
       <View style={[styles.box, styles.border, {borderRadius: 11}]}>
         <MaterialCommunityIcons
           name={'account-group-outline'}
@@ -66,21 +61,65 @@ const Reservation = props => {
               marginLeft: 13 * scale,
               fontSize: 16 * scale,
               color: '#B71A30',
+              fontFamily: 'Pretendard-Medium',
             }}>
-            {' '}
             스터디룸 예약 현황을 확인해보세요!
           </Text>
         </View>
       </View>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        {test.map((data, index) => {
-          return <Reservationstatus data={data} key={index} value={index} />;
-        })}
-      </ScrollView>
-    </View>
+      <View style={styles.refresh}>
+        {refreshing === false ? (
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
+            {test.map((data, index) => {
+              return (
+                <Reservationstatus
+                  id={props.id}
+                  password={props.password}
+                  data={data}
+                  key={index}
+                  value={index}
+                  onRefresh={onRefresh}
+                />
+              );
+            })}
+            {Object.keys(test).length === 0 ? (
+              <View
+                style={{
+                  height: 573 * height,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    backgroundColor: '#FFEAEA',
+                    width: 280 * width,
+                    height: height * 50,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 12 * scale,
+                  }}>
+                  <Text
+                    style={{
+                      fontFamily: 'Pretendard-Medium',
+                      fontSize: 16,
+                      letterSpacing: 0.6 * scale,
+                    }}>
+                    예약 가능한 스터디룸이 없습니다.
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <View></View>
+            )}
+          </ScrollView>
+        ) : (
+          <ActivityIndicator size={'large'} />
+        )}
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -91,17 +130,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  refresh: {
+    height: 620 * height,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   top: {
     flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
   box: {
     height: 56 * height,
     width: 342 * width,
     backgroundColor: '#FFFFFF',
-    marginTop: 69 * height,
-    marginBottom: 10 * height,
-    marginLeft: 16 * scale,
-    marginRight: 16 * scale,
+    marginTop: 16 * height,
+    marginBottom: 15 * height,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',

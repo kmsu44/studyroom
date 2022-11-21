@@ -338,9 +338,9 @@ const Booking = props => {
             style={styles.purpose}
             placeholder={'사용 목적을 입력하세요.'}
             placeholderTextColor={'#8f8f8f'}
-            maxLength={500}
             multiline={true}
             blurOnSubmit={true}
+            maxLength={500}
             onChangeText={purpose => {
               setPurpose(purpose);
             }}></TextInput>

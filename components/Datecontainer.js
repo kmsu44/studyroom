@@ -68,7 +68,7 @@ const Datecontainer = props => {
     if (Choice_date === '') return;
 
     if (getMonth(Choice_date) != getMonth(props.date)) {
-      props.onRefresh();
+      props.onRefresh(Choice_date);
     }
     props.setDate(Choice_date);
     props.setEndhour(value[1]);
@@ -210,11 +210,23 @@ const Datecontainer = props => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderColor: 'gray',
-    borderWidth: 1,
-    width: width * 345,
+    // borderColor: 'gray',
+    // borderWidth: 1,
     borderRadius: 12,
+    width: width * 345,
+
     padding: 20 * scale,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {width: 2, height: 2},
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   week: {
     flexDirection: 'row',
