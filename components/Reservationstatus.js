@@ -21,7 +21,6 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import {scale, width, height} from '../config/globalStyles';
-import {he} from 'date-fns/locale';
 
 const Reservationstatus = props => {
   const day_type = {
