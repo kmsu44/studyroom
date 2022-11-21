@@ -54,6 +54,7 @@ const Login = props => {
         style={styles.input}
         placeholder={'아이디'}
         placeholderTextColor={'#8F8F8F'}
+        keyboardType="number-pad"
         onChangeText={id => {
           setId(id);
         }}
