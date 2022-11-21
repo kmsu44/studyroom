@@ -11,7 +11,8 @@ import Datecontainer from '../components/Datecontainer';
 import axios from 'axios';
 import {height, scale, width} from '../config/globalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import Login from '../components/Login';
+
+import RNRestart from 'react-native-restart';
 const Info = props => {
   return (
     <SafeAreaView style={styles.main}>
@@ -19,8 +20,9 @@ const Info = props => {
         <View style={styles.top}>
           <TouchableOpacity
             onPress={() => {
-              props.setisLoggedIn(false);
-              props.navigation.reset({routes: [{name: 'Login'}]});
+              // props.setisLoggedIn(false);
+              // props.navigation.reset({routes: [{name: 'Login'}]});
+              RNRestart.Restart();
             }}
             style={{
               flexDirection: 'row',

@@ -1,5 +1,5 @@
 import {NavigationContainer, StackActions} from '@react-navigation/native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, SafeAreaView, StatusBar, Text} from 'react-native';
 import AppStackNavi from './navigation/AppstackNavi';
 import HomeScreen from './navigation/HomeScreen';

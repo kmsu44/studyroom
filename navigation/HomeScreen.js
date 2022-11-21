@@ -8,6 +8,7 @@ import {height, width, scale} from '../config/globalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createStackNavigator} from '@react-navigation/stack';
 import Booking from '../components/Booking';
+import {StackActions} from '@react-navigation/native';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const MainStack = props => {
@@ -52,6 +53,9 @@ const MainStack = props => {
 };
 
 const HomeScreen = props => {
+  const goLogin = () => {
+    props.navigation.pop(1);
+  };
   return (
     <Tab.Navigator
       style={styles.container}
@@ -130,6 +134,7 @@ const HomeScreen = props => {
             <Info
               setisLoggedIn={props.setisLoggedIn}
               navigation={props.navigation}
+              goLogin={goLogin}
             />
           )}
         />
