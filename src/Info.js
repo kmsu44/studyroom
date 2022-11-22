@@ -57,7 +57,8 @@ const Info = props => {
             <Text style={styles.text}>
               문의사항 및 버그 관련 제보는 아래의 이메일 주소로 보내주세요!
             </Text>
-            <Text style={styles.text}>kmsu444@naver.com</Text>
+
+            <Text style={styles.text}>📮 kmsu444@naver.com</Text>
           </View>
         </View>
         <View style={styles.box}>
@@ -83,7 +84,7 @@ const Info = props => {
             </View>
             <Text style={styles.semititle}>Design</Text>
             <View style={{marginLeft: 20 * scale}}>
-              <Text style={styles.infotext}>🎨 박서영 19</Text>
+              <Text style={styles.infotext}>📖 박서영 19</Text>
             </View>
           </View>
         </View>
