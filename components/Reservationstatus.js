@@ -40,10 +40,14 @@ const Reservationstatus = props => {
   const [cancelMsg, setCancelMsg] = useState('');
   const [accompany, setAccompany] = useState([]);
   const Remove = async (id, password, cancelMsg, bookingId) => {
+    let data = {
+      id: id,
+      password: password,
+      cancelMsg: cancelMsg,
+      bookingId: bookingId,
+    };
     try {
-      const response = await axios.get(
-        `http://52.79.223.149/Remove/${id}/${password}/${cancelMsg}/${bookingId}`,
-      );
+      const response = await axios.post(`http://52.79.223.149/Remove/`, data);
       if (response.data.result === '취소 완료') {
         Alert.alert('취소 완료');
         toggleModal();
@@ -63,9 +67,15 @@ const Reservationstatus = props => {
     }
   };
   const getaccompany = async (id, password, bookingId) => {
+    let data = {
+      id: id,
+      password: password,
+      bookingId: bookingId,
+    };
     try {
-      const response = await axios.get(
-        `http://52.79.223.149/accompany/${id}/${password}/${bookingId}`,
+      const response = await axios.post(
+        `http://52.79.223.149/accompany/`,
+        data,
       );
       setAccompany(response.data);
     } catch (error) {

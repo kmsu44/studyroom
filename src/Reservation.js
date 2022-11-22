@@ -25,9 +25,14 @@ const Reservation = props => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [test, setTest] = useState([]);
   const checklist = async (id, password) => {
+    let data = {
+      id: id,
+      password: password,
+    };
     try {
-      const response = await axios.get(
-        `http://52.79.223.149/checklist/${id}/${password}`,
+      const response = await axios.post(
+        `http://52.79.223.149/checklist/`,
+        data,
       );
       setTest(response.data);
     } catch (error) {

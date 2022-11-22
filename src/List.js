@@ -23,9 +23,11 @@ const List = props => {
   const getTable = async (year, month) => {
     setRefreshing(true);
     try {
-      const response = await axios.get(
-        `http://52.79.223.149/Table/${year}/${month}`,
-      );
+      let data = {
+        year: year,
+        month: month,
+      };
+      const response = await axios.post(`http://52.79.223.149/Table/`, data);
       setStudyroom(response.data);
     } catch (error) {
       Alert.alert('오류', '서버오류');

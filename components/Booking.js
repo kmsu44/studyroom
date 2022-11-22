@@ -55,6 +55,8 @@ const Booking = props => {
     // }
     else {
       let data = {
+        id: id,
+        password: password,
         year: getYear(props.route.params.today),
         month: getMonth(props.route.params.today) + 1,
         day: getDate(props.route.params.today),
@@ -71,10 +73,9 @@ const Booking = props => {
         result = 'ipid' + (index + 1);
         data[result] = tmp.ipid;
       });
-      console.log(data);
       try {
         const response = await axios.post(
-          `http://52.79.223.149/Reservation/${id}/${password}`,
+          `http://52.79.223.149/Reservation/`,
           data,
         );
         let result = response.data.result;
@@ -91,20 +92,26 @@ const Booking = props => {
     }
   };
   const getIpid = async (id, password) => {
+    let data = {
+      id: id,
+      password: password,
+    };
     try {
-      const response = await axios.get(
-        `http://52.79.223.149/Ipid/${id}/${password}`,
-      );
+      const response = await axios.post(`http://52.79.223.149/Ipid/`, data);
       setIpid(response.data);
     } catch (error) {
       Alert.alert('서버 오류');
     }
   };
   const getBooktime = async (roomId, year, month, day) => {
+    let data = {
+      roomId: roomId,
+      year: year,
+      month: month,
+      day: day,
+    };
     try {
-      const response = await axios.get(
-        `http://52.79.223.149/booktime/${roomId}/${year}/${month}/${day}`,
-      );
+      const response = await axios.post(`http://52.79.223.149/Booktime/`, data);
       setTimelist(response.data);
       setLoading(false);
     } catch (error) {
@@ -112,10 +119,17 @@ const Booking = props => {
     }
   };
   const UserFind = async (id, password, sid, name, year, month, datee) => {
+    let data = {
+      id: id,
+      password: password,
+      sid: sid,
+      name: name,
+      year: year,
+      month: month,
+      datee: datee,
+    };
     try {
-      const response = await axios.get(
-        `http://52.79.223.149/UserFind/${id}/${password}/${sid}/${name}/${year}/${month}/${datee}`,
-      );
+      const response = await axios.post(`http://52.79.223.149/UserFind/`, data);
       let result = response.data;
       // 정상 작동
       if (result == "id':'1") {

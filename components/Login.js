@@ -23,9 +23,11 @@ const Login = props => {
       Alert.alert('비밀번호를 입력하세요');
     } else {
       try {
-        const response = await axios.get(
-          `http://52.79.223.149/login/${id}/${password}`,
-        );
+        let Data = {
+          id: id,
+          password: password,
+        };
+        const response = await axios.post(`http://52.79.223.149/login/`, Data);
         console.log(response.data);
         if (response.data.result === '1') {
           props.setId(id);
