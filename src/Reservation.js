@@ -107,7 +107,7 @@ const Reservation = props => {
                       fontSize: 16,
                       letterSpacing: 0.6 * scale,
                     }}>
-                    예약 가능한 스터디룸이 없습니다.
+                    예약된 스터디룸이 없습니다.
                   </Text>
                 </View>
               </View>
