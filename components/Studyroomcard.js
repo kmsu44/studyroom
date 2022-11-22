@@ -1,16 +1,8 @@
-import {roundToNearestMinutesWithOptions} from 'date-fns/fp';
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Image,
-  StyleSheet,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import React from 'react';
+import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import Timeblock from './Timeblock';
-import Booking from './Booking';
+import {ImgPath} from './ImgPath';
 const time = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 function Studyroomcard(props) {
   let closetime = props.data.closetime;
@@ -21,10 +13,7 @@ function Studyroomcard(props) {
   return (
     <View style={styles.card}>
       <View style={styles.content}>
-        <Image
-          source={require('../assets/images/test.png')}
-          style={styles.img}
-        />
+        <Image source={ImgPath[props.data.roomId]} style={styles.img} />
         <View style={styles.textcontainer}>
           <View>
             <Text style={styles.title}>{props.data.name}</Text>

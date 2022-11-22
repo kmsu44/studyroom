@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 
 const Timeblock = props => {
@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#44D600',
     height: 6 * height,
     width: 28 * width,
-    borderLeftWidth: 1,
+    borderLeftWidth: 1 * scale,
     borderColor: 'white',
   },
   off: {
     backgroundColor: '#E2E2E2',
     height: 6 * height,
     width: 28 * width,
-    borderLeftWidth: 1,
+    borderLeftWidth: 1 * scale,
     borderColor: 'white',
   },
 });

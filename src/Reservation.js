@@ -1,25 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Button,
   SafeAreaView,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
   ActivityIndicator,
-  Image,
   ScrollView,
   RefreshControl,
   Alert,
 } from 'react-native';
 
 import axios from 'axios';
-import Studyroomcard from '../components/Studyroomcard';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {scale, width, height} from '../config/globalStyles';
 import Reservationstatus from '../components/Reservationstatus';
-import {map} from 'react-native-cheerio/lib/api/traversing';
 
 const Reservation = props => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -37,6 +31,7 @@ const Reservation = props => {
       setTest(response.data);
     } catch (error) {
       Alert.alert('서버오류');
+      console.log(error);
     }
   };
 

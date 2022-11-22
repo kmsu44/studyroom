@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
-  Platform,
   StyleSheet,
   Text,
-  View,
   Image,
   TextInput,
   TouchableOpacity,
@@ -28,7 +26,6 @@ const Login = props => {
           password: password,
         };
         const response = await axios.post(`http://52.79.223.149/login/`, Data);
-        console.log(response.data);
         if (response.data.result === '1') {
           props.setId(id);
           props.setPassword(password);

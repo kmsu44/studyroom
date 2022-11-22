@@ -1,4 +1,3 @@
-import {add, quartersInYear, setHours} from 'date-fns';
 import React, {useEffect, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -7,18 +6,14 @@ import {
   View,
   StyleSheet,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   Image,
-  ScrollView,
   TextInput,
   LogBox,
-  KeyboardAvoidingView,
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import axios from 'axios';
 import {getDate, getMonth, getYear, getDay} from 'date-fns';
-import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
@@ -200,7 +195,7 @@ const Booking = props => {
         <View style={styles.card}>
           <View style={styles.content}>
             <Image
-              source={require('../assets/images/studyroom.png')}
+              source={require('../assets/images/test.png')}
               style={styles.img}
             />
             <View style={styles.textcontainer}>

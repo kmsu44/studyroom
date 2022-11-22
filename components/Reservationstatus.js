@@ -9,20 +9,11 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {
-  getDate,
-  startOfWeek,
-  getMonth,
-  getDay,
-  getYear,
-  format,
-  addDays,
-} from 'date-fns';
 import axios from 'axios';
 import {scale, width, height} from '../config/globalStyles';
 import Modal from 'react-native-modal';
-import {prop} from 'react-native-cheerio/lib/api/attributes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ImgPath} from './ImgPath';
 const Reservationstatus = props => {
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -86,13 +77,6 @@ const Reservationstatus = props => {
     getaccompany(props.id, props.password, props.data.bookingId);
   }, []);
   return (
-    // if ({props.data.title} === {'대양 AI 콜라보랩 Talk Room3'}){
-    //   styles.status.height = 200;
-    // }
-    // if ({props.data.title} === {'24 스터디룸(4층)_당일예약)'}){
-    //   styles.status.height = 200;
-    // }
-
     <View style={styles.status}>
       <View
         style={{
@@ -102,13 +86,19 @@ const Reservationstatus = props => {
         <View
           style={{
             width: 139 * width,
+            justifyContent: 'center',
+            alignContent: 'center',
           }}>
           <Image
-            source={require('../assets/images/studyroom2.png')}
-            style={{height: 139 * height, width: 124 * width}}></Image>
+            source={ImgPath[props.data.roomId]}
+            style={{
+              height: 130 * height,
+              width: 130 * width,
+              borderRadius: 16 * scale,
+            }}></Image>
         </View>
         <View style={{width: 169 * width}}>
-          <View style={{marginLeft: 8 * scale, marginTop: 8 * height}}>
+          <View style={{marginLeft: 8 * width, marginTop: 8 * height}}>
             <Text
               style={{
                 fontSize: 16 * scale,

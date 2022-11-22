@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import List from '../src/List';
 import Info from '../src/Info';
 import Reservation from '../src/Reservation';
@@ -8,7 +8,6 @@ import {height, width, scale} from '../config/globalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createStackNavigator} from '@react-navigation/stack';
 import Booking from '../components/Booking';
-import {StackActions} from '@react-navigation/native';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const MainStack = props => {

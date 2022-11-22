@@ -22,25 +22,25 @@ const List = props => {
   const [studyroom, setStudyroom] = useState([]);
   const getTable = async (year, month) => {
     setRefreshing(true);
+    let data = {
+      year: year,
+      month: month,
+    };
     try {
-      let data = {
-        year: year,
-        month: month,
-      };
       const response = await axios.post(`http://52.79.223.149/Table/`, data);
       setStudyroom(response.data);
     } catch (error) {
-      Alert.alert('오류', '서버오류');
+      Alert.alert('서버오류');
     }
     setRefreshing(false);
   };
 
-  const onRefresh = React.useCallback(date => {
+  const onRefresh = React.useCallback(() => {
     getTable(getYear(date), getMonth(date));
     countroom = 0;
   }, []);
   useEffect(() => {
-    onRefresh(date);
+    onRefresh();
     const weekDays = getWeekDays(date);
     setWeek(weekDays);
   }, []);
@@ -142,7 +142,6 @@ const List = props => {
               />
             </View>
           </Modal>
-          {/* 원래 tune */}
           <MaterialCommunityIcons name={'tune'} color={'#EA4F4F'} size={30} />
           <Text style={styles.hourlist}>
             {starthour}:00 ~ {endhour}:00 ({endhour - starthour}시간){' '}

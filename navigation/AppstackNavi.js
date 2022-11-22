@@ -1,10 +1,7 @@
-import React, {useEffect, useState} from 'react';
-
+import React, {useState} from 'react';
 import HomeScreen from './HomeScreen';
 import Login from '../components/Login';
-import Booking from '../components/Booking';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory';
 const Stack = createNativeStackNavigator();
 const AppStackNavi = () => {
   const [isLoggedIn, setisLoggedIn] = useState(false);

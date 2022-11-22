@@ -1,20 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Button,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
 import {getDate, getMonth} from 'date-fns';
-import {onChange} from 'react-native-reanimated';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Slider} from '@miblanchard/react-native-slider';
-import {val} from 'react-native-cheerio/lib/api/attributes';
 
 const Datecontainer = props => {
   const [starthour, setStarthour] = useState(props.starthour);
