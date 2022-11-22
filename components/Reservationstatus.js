@@ -34,40 +34,22 @@ const Reservationstatus = props => {
     6: '토요일',
     0: '일요일',
   };
-  // const Remove = async (id, password, roomId, cancelMsg, bookingId) => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://52.79.223.149/Remove/${id}/${password}/${roomId}/${cancelMsg}/${bookingId}`,
-  //     );
-  //     setTest(response.data);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setload(1);
-  //     console.log('success!');
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   onRefresh();
-  //   Remove(
-  //     props.id,
-  //     props.password,
-  //     props.roomId,
-  //     props.cancelMsg,
-  //     props.bookingId,
-  //   );
-  // }, []);
+  const Remove = async (id, password, roomId, cancelMsg, bookingId) => {
+    try {
+      const response = await axios.get(
+        `http://52.79.223.149/Remove/${id}/${password}/${roomId}/${cancelMsg}/${bookingId}`,
+      );
+      setTest(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setload(1);
+      console.log('success!');
+    }
+  };
 
   return (
-    // if ({props.data.title} === {'대양 AI 콜라보랩 Talk Room3'}){
-    //   styles.status.height = 200;
-    // }
-    // if ({props.data.title} === {'24 스터디룸(4층)_당일예약)'}){
-    //   styles.status.height = 200;
-    // }
-
     <View style={styles.status}>
       <View
         style={{
@@ -95,7 +77,7 @@ const Reservationstatus = props => {
             </Text>
             <Text style={styles.list}>
               예약 날짜 : {props.data.month}월 {props.data.datee}일{' '}
-              {day_type[props.data.day]}
+              {day_type[props.data.day + 1]}
             </Text>
             <Text style={styles.list}>
               예약 시간 : {props.data.starttime}:00 ~ {props.data.endtime}:00
