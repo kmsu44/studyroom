@@ -123,7 +123,7 @@ const HomeScreen = props => {
               color = focused ? '#b71a30' : '#b71a3099';
               return (
                 <MaterialCommunityIcons
-                  name="account"
+                  name="information-outline"
                   color={color}
                   size={30 * scale}
                 />

@@ -46,9 +46,7 @@ const Login = props => {
         source={require('../assets/images/logo.png')}
         style={styles.logo}
       />
-      <Text style={styles.info}>
-        세종대학교 포털사이트 계정을 입력하시면 됩니다.
-      </Text>
+      <Text style={styles.info}>세종대학교 포털 계정으로 로그인</Text>
       <TextInput
         value={id}
         style={styles.input}

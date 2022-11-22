@@ -28,6 +28,7 @@ const Reservationstatus = props => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+<<<<<<< HEAD
   const day_type = {
     0: '월요일',
     1: '화요일',
@@ -75,7 +76,42 @@ const Reservationstatus = props => {
   useEffect(() => {
     getaccompany(props.id, props.password, props.data.bookingId);
   }, []);
+=======
+  // const Remove = async (id, password, roomId, cancelMsg, bookingId) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://52.79.223.149/Remove/${id}/${password}/${roomId}/${cancelMsg}/${bookingId}`,
+  //     );
+  //     setTest(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setload(1);
+  //     console.log('success!');
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   onRefresh();
+  //   Remove(
+  //     props.id,
+  //     props.password,
+  //     props.roomId,
+  //     props.cancelMsg,
+  //     props.bookingId,
+  //   );
+  // }, []);
+
+>>>>>>> parent of 9881713 (요일 수정)
   return (
+    // if ({props.data.title} === {'대양 AI 콜라보랩 Talk Room3'}){
+    //   styles.status.height = 200;
+    // }
+    // if ({props.data.title} === {'24 스터디룸(4층)_당일예약)'}){
+    //   styles.status.height = 200;
+    // }
+
     <View style={styles.status}>
       <View
         style={{

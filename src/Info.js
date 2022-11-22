@@ -13,7 +13,12 @@ import {height, scale, width} from '../config/globalStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import RNRestart from 'react-native-restart';
+
 const Info = props => {
+  const [toggle, setToggle] = useState(true);
+  const inverse = () => {
+    setToggle(!toggle);
+  };
   return (
     <SafeAreaView style={styles.main}>
       <View>
@@ -62,7 +67,10 @@ const Info = props => {
           </View>
         </View>
         <View style={styles.box}>
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              inverse();
+            }}
             style={{
               flexDirection: 'row',
               justifyContent: 'flex-start',
@@ -73,20 +81,28 @@ const Info = props => {
               color={'#B71A30'}
               size={20}
             />
-            <Text style={styles.title}>소개</Text>
-          </View>
-          <View style={{marginTop: 12 * height, marginBottom: 12 * height}}>
-            <Text style={styles.semititle}>Development</Text>
-            <View style={{marginLeft: 20 * scale}}>
-              <Text style={styles.infotext}>🖥️ 김민수 18</Text>
-              <Text style={styles.infotext}>🖥️ 유의진 20</Text>
-              <Text style={styles.infotext}>✈️ 정한비 20</Text>
+            <Text style={styles.title}>제작자</Text>
+          </TouchableOpacity>
+          {toggle === false ? (
+            <View style={{marginTop: 12 * height, marginBottom: 12 * height}}>
+              <Text style={styles.semititle}>Development</Text>
+              <View style={{marginLeft: 20 * scale}}>
+                <Text style={styles.infotext}>🖥️ 김민수 18</Text>
+                <Text style={styles.infotext}>🖥️ 유의진 20</Text>
+                <Text style={styles.infotext}>🚀🛸 정한비 20</Text>
+              </View>
+              <Text style={styles.semititle}>Design</Text>
+              <View style={{marginLeft: 20 * scale}}>
+                <Text style={styles.infotext}>🎨 박서영 19</Text>
+              </View>
             </View>
-            <Text style={styles.semititle}>Design</Text>
-            <View style={{marginLeft: 20 * scale}}>
-              <Text style={styles.infotext}>📖 박서영 19</Text>
+          ) : (
+            <View>
+              <Text></Text>
+              <Text style={styles.text}>만든 사람이 궁금 하시다면❓</Text>
+              <Text></Text>
             </View>
-          </View>
+          )}
         </View>
       </View>
     </SafeAreaView>
