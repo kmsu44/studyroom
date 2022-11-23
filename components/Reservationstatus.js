@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,10 +14,16 @@ import {scale, width, height} from '../config/globalStyles';
 import Modal from 'react-native-modal';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ImgPath} from './ImgPath';
+import ViewShot from 'react-native-view-shot';
+import Share from 'react-native-share';
 const Reservationstatus = props => {
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible2, setModalVisible2] = useState(false);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+  };
+  const toggleModal2 = () => {
+    setModalVisible2(!isModalVisible2);
   };
   const day_type = {
     0: '월요일',
@@ -73,6 +79,18 @@ const Reservationstatus = props => {
       Alert.alert('서버오류');
     }
   };
+  const onCapture = uri => {
+    ref.current.capture().then(uri => {
+      onShare(uri);
+    });
+  };
+
+  const onShare = async uri => {
+    const result = await Share.open({
+      url: Platform.OS === 'ios' ? `file://${uri}` : uri,
+    }).catch(err => {});
+  };
+  const ref = useRef();
   useEffect(() => {
     getaccompany(props.id, props.password, props.data.bookingId);
   }, []);
@@ -140,7 +158,10 @@ const Reservationstatus = props => {
                       </TouchableOpacity>
                     </View>
                     <View
-                      style={{justifyContent: 'center', alignItems: 'center'}}>
+                      style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
                       <View style={styles.accompanycontain}>
                         {accompany.map((data, idx) => {
                           return (
@@ -191,7 +212,71 @@ const Reservationstatus = props => {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.5}>
+
+            <TouchableOpacity activeOpacity={0.5} onPress={toggleModal2}>
+              <Modal
+                isVisible={isModalVisible2}
+                backdropColor={'white'}
+                style={{justifyContent: 'center', alignItems: 'center'}}>
+                <View style={styles.modal2}>
+                  <View style={{alignItems: 'flex-end'}}>
+                    <TouchableOpacity
+                      onPress={toggleModal2}
+                      style={{
+                        marginRight: 10 * scale,
+                        marginTop: 10 * scale,
+                      }}>
+                      <MaterialCommunityIcons
+                        name="close"
+                        color={'black'}
+                        size={30}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <ViewShot
+                    ref={ref}
+                    options={{fileName: 'share', format: 'jpg', quality: 0.9}}>
+                    <View style={{backgroundColor: 'white'}}>
+                      <View style={{alignItems: 'center'}}>
+                        <Image
+                          source={ImgPath[props.data.roomId]}
+                          style={{
+                            height: 120 * height,
+                            width: 120 * width,
+                            borderRadius: 16 * scale,
+                          }}></Image>
+                      </View>
+                      <Text
+                        style={{
+                          fontSize: 16 * scale,
+                          fontFamily: 'Pretendard-SemiBold',
+                          marginBottom: 5 * height,
+                          textAlign: 'center',
+                          marginTop: 10 * height,
+                        }}>
+                        {props.data.title}
+                      </Text>
+                      <Text style={styles.sharetext}>
+                        {props.data.month}월 {props.data.datee}일{' '}
+                        {day_type[props.data.day]}
+                      </Text>
+                      <Text style={styles.sharetext}>
+                        {props.data.starttime}:00 ~ {props.data.endtime}:00
+                      </Text>
+                    </View>
+                  </ViewShot>
+
+                  <TouchableOpacity onPress={onCapture} style={styles.sharebtn}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontFamily: 'Pretendard-SemiBold',
+                      }}>
+                      예약 현황 공유하기
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </Modal>
               <View style={styles.share}>
                 <Text
                   style={{
@@ -260,9 +345,6 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
     }),
-  },
-  top: {
-    flex: 1,
   },
 
   box: {
@@ -358,6 +440,41 @@ const styles = StyleSheet.create({
   quit: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  sharetext: {
+    color: '#B71A30',
+    textAlign: 'center',
+    fontFamily: 'Pretendard-SemiBold',
+    fontSize: 18 * scale,
+  },
+  modal2: {
+    width: 280 * width,
+    justifyContent: 'center',
+    borderRadius: 32,
+    backgroundColor: '#fff',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {width: 2, height: 2},
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
+  },
+  top: {
+    flex: 1,
+  },
+  sharebtn: {
+    marginTop: 10 * scale,
+    backgroundColor: '#FFEAEA',
+    height: 50 * height,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });
