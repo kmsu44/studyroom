@@ -94,6 +94,7 @@ const Reservationstatus = props => {
   useEffect(() => {
     getaccompany(props.id, props.password, props.data.bookingId);
   }, []);
+  const number = Number(props.data.number) + 1;
   return (
     <View style={styles.status}>
       <View
@@ -132,9 +133,7 @@ const Reservationstatus = props => {
             <Text style={styles.list}>
               예약 시간 : {props.data.starttime}:00 ~ {props.data.endtime}:00
             </Text>
-            <Text style={styles.list}>
-              사용 인원 수 : {props.data.number}명
-            </Text>
+            <Text style={styles.list}>사용 인원 수 : {number}명</Text>
           </View>
           <View
             style={{
@@ -233,38 +232,54 @@ const Reservationstatus = props => {
                       />
                     </TouchableOpacity>
                   </View>
-                  <ViewShot
-                    ref={ref}
-                    options={{fileName: 'share', format: 'jpg', quality: 0.9}}>
-                    <View style={{backgroundColor: 'white'}}>
-                      <View style={{alignItems: 'center'}}>
-                        <Image
-                          source={ImgPath[props.data.roomId]}
-                          style={{
-                            height: 120 * height,
-                            width: 120 * width,
-                            borderRadius: 16 * scale,
-                          }}></Image>
-                      </View>
-                      <Text
+                  <View
+                    style={{
+                      width: 280 * width,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <ViewShot
+                      ref={ref}
+                      options={{
+                        fileName: 'share',
+                        format: 'jpg',
+                        quality: 0.9,
+                      }}>
+                      <View
                         style={{
-                          fontSize: 16 * scale,
-                          fontFamily: 'Pretendard-SemiBold',
-                          marginBottom: 5 * height,
-                          textAlign: 'center',
-                          marginTop: 10 * height,
+                          width: 200 * scale,
+                          height: 200 * scale,
+                          margin: 10 * scale,
                         }}>
-                        {props.data.title}
-                      </Text>
-                      <Text style={styles.sharetext}>
-                        {props.data.month}월 {props.data.datee}일{' '}
-                        {day_type[props.data.day]}
-                      </Text>
-                      <Text style={styles.sharetext}>
-                        {props.data.starttime}:00 ~ {props.data.endtime}:00
-                      </Text>
-                    </View>
-                  </ViewShot>
+                        <View style={{alignItems: 'center'}}>
+                          <Image
+                            source={ImgPath[props.data.roomId]}
+                            style={{
+                              height: 120 * height,
+                              width: 120 * width,
+                              borderRadius: 16 * scale,
+                            }}></Image>
+                        </View>
+                        <Text
+                          style={{
+                            fontSize: 16 * scale,
+                            fontFamily: 'Pretendard-SemiBold',
+                            marginBottom: 5 * height,
+                            textAlign: 'center',
+                            marginTop: 10 * height,
+                          }}>
+                          {props.data.title}
+                        </Text>
+                        <Text style={styles.sharetext}>
+                          {props.data.month}월 {props.data.datee}일{' '}
+                          {day_type[props.data.day]}
+                        </Text>
+                        <Text style={styles.sharetext}>
+                          {props.data.starttime}:00 ~ {props.data.endtime}:00
+                        </Text>
+                      </View>
+                    </ViewShot>
+                  </View>
 
                   <TouchableOpacity onPress={onCapture} style={styles.sharebtn}>
                     <Text
@@ -469,7 +484,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sharebtn: {
-    marginTop: 10 * scale,
     backgroundColor: '#FFEAEA',
     height: 50 * height,
     borderBottomLeftRadius: 32,
