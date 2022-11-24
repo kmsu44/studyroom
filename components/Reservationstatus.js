@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     marginTop: 5 * height,
   },
   share: {
-    backgroundColor: '#CD2719',
+    backgroundColor: '#B71A30',
     height: 26 * height,
     width: 55 * width,
     borderRadius: 8 * scale,

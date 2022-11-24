@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
   checkbtn: {
     width: 40 * width,
     height: 34 * height,
-    backgroundColor: '#b71a30',
+    backgroundColor: '#B71A30',
     borderRadius: 8 * scale,
     justifyContent: 'center',
     marginLeft: 2 * width,
@@ -457,7 +457,7 @@ const styles = StyleSheet.create({
   done: {
     height: 40 * height,
     width: 170 * width,
-    backgroundColor: '#b71a30',
+    backgroundColor: '#B71A30',
     justifyContent: 'center',
     borderRadius: 12 * scale,
     marginTop: 30 * height,
@@ -472,6 +472,7 @@ const styles = StyleSheet.create({
   usercontainer: {
     width: 335 * width,
     marginTop: 10 * height,
+    marginBottom: 10 * height,
     alignContent: 'flex-start',
     flexWrap: 'wrap',
     flexDirection: 'row',

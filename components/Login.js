@@ -90,8 +90,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 150 * width,
-    height: 150 * height,
+    width: 267 * width,
+    height: 97 * height,
+    marginTop: 59 * height,
   },
   info: {
     color: '#375066',
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   btn: {
     width: 319 * width,
     height: 54 * height,
-    backgroundColor: '#cd2719',
+    backgroundColor: '#B71A30',
     borderRadius: 16,
     marginTop: 20 * height,
     justifyContent: 'center',
