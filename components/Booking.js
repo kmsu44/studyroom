@@ -12,6 +12,7 @@ import {
   LogBox,
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
+import {ImgPath} from './ImgPath';
 import axios from 'axios';
 import {getDate, getMonth, getYear, getDay} from 'date-fns';
 LogBox.ignoreLogs([
@@ -195,7 +196,7 @@ const Booking = props => {
         <View style={styles.card}>
           <View style={styles.content}>
             <Image
-              source={require('../assets/images/test.png')}
+              source={ImgPath[props.route.params.data.roomId]}
               style={styles.img}
             />
             <View style={styles.textcontainer}>
