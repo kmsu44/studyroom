@@ -43,7 +43,6 @@ const List = props => {
       month = 0;
       year += 1;
     }
-    console.log(year, month);
     getTable(year, month, 'N');
     countroom = 0;
   }, []);
@@ -190,7 +189,6 @@ const List = props => {
                     today={date}
                     id={props.id}
                     password={props.password}
-                    choice={date}
                     day={getDay(date)}
                   />
                 );

@@ -55,7 +55,7 @@ const Booking = props => {
         password: password,
         year: getYear(props.route.params.today),
         month: getMonth(props.route.params.today) + 1,
-        day: getDate(props.route.params.today),
+        day: ('0' + getDate(props.route.params.today)).slice(-2),
         startHour: startHour,
         closeTime: 20,
         hours: hours,
@@ -65,6 +65,7 @@ const Booking = props => {
         ipid: ipid,
         roomId: props.route.params.data.roomId,
       };
+      console.log(data);
       users.map((tmp, index) => {
         result = 'ipid' + (index + 1);
         data[result] = tmp.ipid;
