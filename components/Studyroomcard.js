@@ -56,9 +56,9 @@ function Studyroomcard(props) {
           if (closetime <= data) {
             infovalue = ' ';
           }
-          if (props.day === 6 && index > 5) {
-            infovalue = ' ';
-          }
+          // if (props.day === 6 && index > 5) {
+          //   infovalue = ' ';
+          // }
           return (
             <View key={index} value={index}>
               <Timeblock time={data} info={infovalue} />

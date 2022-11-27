@@ -20,11 +20,12 @@ import {height, scale, width} from '../config/globalStyles';
 const List = props => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [studyroom, setStudyroom] = useState([]);
-  const getTable = async (year, month) => {
+  const getTable = async (year, month, mode = '') => {
     setRefreshing(true);
     let data = {
       year: year,
       month: month,
+      mode: mode,
     };
     try {
       const response = await axios.post(`http://52.79.223.149/Table/`, data);
@@ -35,12 +36,19 @@ const List = props => {
     setRefreshing(false);
   };
 
-  const onRefresh = React.useCallback(() => {
-    getTable(getYear(date), getMonth(date));
+  const onRefresh = React.useCallback(newdate => {
+    let year = getYear(newdate);
+    let month = getMonth(newdate);
+    if (month == 12) {
+      month = 0;
+      year += 1;
+    }
+    console.log(year, month);
+    getTable(year, month, 'N');
     countroom = 0;
   }, []);
   useEffect(() => {
-    onRefresh();
+    onRefresh(date);
     const weekDays = getWeekDays(date);
     setWeek(weekDays);
   }, []);
