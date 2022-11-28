@@ -111,7 +111,12 @@ const List = props => {
     let cnt = 0;
     data.timetable[getDate(date) - 1].map((timedata, index) => {
       hour = index + 10;
-      if (starthour <= hour && hour < endhour) {
+      let start = starthour;
+      let end = endhour;
+      if (getDay(date) === 6) {
+        end = 16;
+      }
+      if (start <= hour && hour < end) {
         if (timedata == hour) {
           cnt += 1;
         }
