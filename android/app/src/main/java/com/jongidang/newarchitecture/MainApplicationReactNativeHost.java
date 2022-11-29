@@ -1,4 +1,4 @@
-package com.studyroom.newarchitecture;
+package com.jongidang.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.studyroom.BuildConfig;
-import com.studyroom.newarchitecture.components.MainComponentsRegistry;
-import com.studyroom.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.jongidang.BuildConfig;
+import com.jongidang.newarchitecture.components.MainComponentsRegistry;
+import com.jongidang.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

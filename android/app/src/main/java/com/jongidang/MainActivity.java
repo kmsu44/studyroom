@@ -1,4 +1,4 @@
-package com.studyroom;
+package com.jongidang;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

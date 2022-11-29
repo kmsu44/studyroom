@@ -1,4 +1,4 @@
-package com.studyroom.newarchitecture.modules;
+package com.jongidang.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
