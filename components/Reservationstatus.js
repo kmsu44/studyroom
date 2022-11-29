@@ -44,7 +44,7 @@ const Reservationstatus = props => {
       bookingId: bookingId,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/Remove/`, data);
+      const response = await axios.post(`https://jongidang.xyz/Remove/`, data);
       if (response.data.result === '취소 완료') {
         Alert.alert('취소 완료');
         toggleModal();
@@ -71,7 +71,7 @@ const Reservationstatus = props => {
     };
     try {
       const response = await axios.post(
-        `http://52.79.223.149/accompany/`,
+        `https://jongidang.xyz/accompany`,
         data,
       );
       setAccompany(response.data);

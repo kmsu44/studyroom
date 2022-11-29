@@ -28,7 +28,7 @@ const List = props => {
       mode: mode,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/Table/`, data);
+      const response = await axios.post(`https://jongidang.xyz/Table/`, data);
       setStudyroom(response.data);
     } catch (error) {
       Alert.alert('서버오류');

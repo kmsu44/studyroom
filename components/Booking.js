@@ -65,14 +65,13 @@ const Booking = props => {
         ipid: ipid,
         roomId: props.route.params.data.roomId,
       };
-      console.log(data);
       users.map((tmp, index) => {
         result = 'ipid' + (index + 1);
         data[result] = tmp.ipid;
       });
       try {
         const response = await axios.post(
-          `http://52.79.223.149/Reservation/`,
+          `https://jongidang.xyz/Reservation/`,
           data,
         );
         let result = response.data.result;
@@ -94,7 +93,7 @@ const Booking = props => {
       password: password,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/Ipid/`, data);
+      const response = await axios.post(`https://jongidang.xyz/Ipid`, data);
       setIpid(response.data);
     } catch (error) {
       Alert.alert('서버 오류');
@@ -108,7 +107,7 @@ const Booking = props => {
       day: day,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/Booktime/`, data);
+      const response = await axios.post(`https://jongidang.xyz/Booktime`, data);
       setTimelist(response.data);
       setLoading(false);
     } catch (error) {
@@ -126,7 +125,10 @@ const Booking = props => {
       datee: datee,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/UserFind/`, data);
+      const response = await axios.post(
+        `https://jongidang.xyz/UserFind/`,
+        data,
+      );
       let result = response.data;
       // 정상 작동
       if (result == "id':'1") {

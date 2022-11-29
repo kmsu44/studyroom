@@ -25,7 +25,7 @@ const Login = props => {
           id: id,
           password: password,
         };
-        const response = await axios.post(`http://52.79.223.149/login/`, Data);
+        const response = await axios.post(`https://jongidang.xyz/login/`, Data);
         if (response.data.result === '1') {
           props.setId(id);
           props.setPassword(password);
