@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#FFEAEA',
     borderRadius: 12,
-    width: 300 * width,
+    width: 310 * width,
     height: 100 * height,
     margin: 10 * scale,
     padding: 10 * scale,
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   accompany: {
-    fontSize: 12 * scale,
+    fontSize: 11 * scale,
     fontFamily: 'Pretendard-SemiBold',
     margin: 2 * scale,
     letterSpacing: 1 * scale,
@@ -447,10 +447,9 @@ const styles = StyleSheet.create({
     borderRadius: 12 * scale,
     marginTop: 10 * scale,
     justifyContent: 'center',
-    alignItems: 'center',
     padding: 5 * scale,
     marginBottom: 10 * scale,
-    width: 300 * width,
+    width: 310 * width,
   },
   quit: {
     flexDirection: 'row',
