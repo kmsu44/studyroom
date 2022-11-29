@@ -20,14 +20,15 @@ import {height, scale, width} from '../config/globalStyles';
 const List = props => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [studyroom, setStudyroom] = useState([]);
-  const getTable = async (year, month) => {
+  const getTable = async (year, month, mode = '') => {
     setRefreshing(true);
     let data = {
       year: year,
       month: month,
+      mode: mode,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/Table/`, data);
+      const response = await axios.post(`https://jongidang.xyz/Table/`, data);
       setStudyroom(response.data);
     } catch (error) {
       Alert.alert('서버오류');
@@ -35,12 +36,18 @@ const List = props => {
     setRefreshing(false);
   };
 
-  const onRefresh = React.useCallback(() => {
-    getTable(getYear(date), getMonth(date));
+  const onRefresh = React.useCallback(newdate => {
+    let year = getYear(newdate);
+    let month = getMonth(newdate);
+    if (month == 12) {
+      month = 0;
+      year += 1;
+    }
+    getTable(year, month, 'N');
     countroom = 0;
   }, []);
   useEffect(() => {
-    onRefresh();
+    onRefresh(date);
     const weekDays = getWeekDays(date);
     setWeek(weekDays);
   }, []);
@@ -104,7 +111,12 @@ const List = props => {
     let cnt = 0;
     data.timetable[getDate(date) - 1].map((timedata, index) => {
       hour = index + 10;
-      if (starthour <= hour && hour < endhour) {
+      let start = starthour;
+      let end = endhour;
+      if (getDay(date) === 6) {
+        end = 16;
+      }
+      if (start <= hour && hour < end) {
         if (timedata == hour) {
           cnt += 1;
         }
@@ -182,7 +194,6 @@ const List = props => {
                     today={date}
                     id={props.id}
                     password={props.password}
-                    choice={date}
                     day={getDay(date)}
                   />
                 );

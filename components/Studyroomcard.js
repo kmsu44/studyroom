@@ -53,9 +53,12 @@ function Studyroomcard(props) {
           }
           let infovalue = props.data.timetable[props.date - 1][index];
           // 주말일경우 4시까지
-          if (props.day === 6 && index > 5) {
+          if (closetime <= data) {
             infovalue = ' ';
           }
+          // if (props.day === 6 && index > 5) {
+          //   infovalue = ' ';
+          // }
           return (
             <View key={index} value={index}>
               <Timeblock time={data} info={infovalue} />

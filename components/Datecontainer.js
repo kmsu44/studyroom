@@ -55,11 +55,10 @@ const Datecontainer = props => {
   const quit = () => {
     props.toggleModal();
     if (Choice_date === '') return;
-
+    props.setDate(Choice_date);
     if (getMonth(Choice_date) != getMonth(props.date)) {
       props.onRefresh(Choice_date);
     }
-    props.setDate(Choice_date);
     props.setEndhour(value[1]);
     props.setStarthour(value[0]);
     props.setLimit(limit);

@@ -25,13 +25,12 @@ const Reservation = props => {
     };
     try {
       const response = await axios.post(
-        `http://52.79.223.149/checklist/`,
+        `https://jongidang.xyz/checklist/`,
         data,
       );
       setTest(response.data);
     } catch (error) {
       Alert.alert('서버오류');
-      console.log(error);
     }
   };
 
@@ -44,7 +43,6 @@ const Reservation = props => {
 
   useEffect(() => {
     onRefresh();
-    checklist(props.id, props.password);
   }, []);
 
   return (

@@ -12,6 +12,7 @@ import {
   LogBox,
 } from 'react-native';
 import {height, width, scale} from '../config/globalStyles';
+import {ImgPath} from './ImgPath';
 import axios from 'axios';
 import {getDate, getMonth, getYear, getDay} from 'date-fns';
 LogBox.ignoreLogs([
@@ -54,7 +55,7 @@ const Booking = props => {
         password: password,
         year: getYear(props.route.params.today),
         month: getMonth(props.route.params.today) + 1,
-        day: getDate(props.route.params.today),
+        day: ('0' + getDate(props.route.params.today)).slice(-2),
         startHour: startHour,
         closeTime: 20,
         hours: hours,
@@ -70,7 +71,7 @@ const Booking = props => {
       });
       try {
         const response = await axios.post(
-          `http://52.79.223.149/Reservation/`,
+          `https://jongidang.xyz/Reservation/`,
           data,
         );
         let result = response.data.result;
@@ -92,7 +93,7 @@ const Booking = props => {
       password: password,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/Ipid/`, data);
+      const response = await axios.post(`https://jongidang.xyz/Ipid`, data);
       setIpid(response.data);
     } catch (error) {
       Alert.alert('서버 오류');
@@ -106,7 +107,7 @@ const Booking = props => {
       day: day,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/Booktime/`, data);
+      const response = await axios.post(`https://jongidang.xyz/Booktime`, data);
       setTimelist(response.data);
       setLoading(false);
     } catch (error) {
@@ -124,7 +125,10 @@ const Booking = props => {
       datee: datee,
     };
     try {
-      const response = await axios.post(`http://52.79.223.149/UserFind/`, data);
+      const response = await axios.post(
+        `https://jongidang.xyz/UserFind/`,
+        data,
+      );
       let result = response.data;
       // 정상 작동
       if (result == "id':'1") {
@@ -195,7 +199,7 @@ const Booking = props => {
         <View style={styles.card}>
           <View style={styles.content}>
             <Image
-              source={require('../assets/images/test.png')}
+              source={ImgPath[props.route.params.data.roomId]}
               style={styles.img}
             />
             <View style={styles.textcontainer}>
@@ -432,7 +436,7 @@ const styles = StyleSheet.create({
   checkbtn: {
     width: 40 * width,
     height: 34 * height,
-    backgroundColor: '#b71a30',
+    backgroundColor: '#B71A30',
     borderRadius: 8 * scale,
     justifyContent: 'center',
     marginLeft: 2 * width,
@@ -457,7 +461,7 @@ const styles = StyleSheet.create({
   done: {
     height: 40 * height,
     width: 170 * width,
-    backgroundColor: '#b71a30',
+    backgroundColor: '#B71A30',
     justifyContent: 'center',
     borderRadius: 12 * scale,
     marginTop: 30 * height,
@@ -472,6 +476,7 @@ const styles = StyleSheet.create({
   usercontainer: {
     width: 335 * width,
     marginTop: 10 * height,
+    marginBottom: 10 * height,
     alignContent: 'flex-start',
     flexWrap: 'wrap',
     flexDirection: 'row',
