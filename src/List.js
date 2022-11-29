@@ -20,7 +20,7 @@ import {height, scale, width} from '../config/globalStyles';
 const List = props => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [studyroom, setStudyroom] = useState([]);
-  const getTable = async (year, month, mode = '') => {
+  const getTable = async (year, month, mode) => {
     setRefreshing(true);
     let data = {
       year: year,
@@ -177,7 +177,9 @@ const List = props => {
               <RefreshControl
                 progressViewOffset={1}
                 refreshing={refreshing}
-                onRefresh={onRefresh}
+                onRefresh={() => {
+                  onRefresh(date);
+                }}
               />
             }>
             {studyroom.map((data, index) => {
