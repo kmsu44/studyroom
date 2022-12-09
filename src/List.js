@@ -113,7 +113,7 @@ const List = props => {
       hour = index + 10;
       let start = starthour;
       let end = endhour;
-      let close;
+      let close = 21;
       if (getDay(date) === 6) {
         close = 16;
       }
