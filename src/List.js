@@ -113,11 +113,16 @@ const List = props => {
       hour = index + 10;
       let start = starthour;
       let end = endhour;
+      let close;
       if (getDay(date) === 6) {
-        end = 16;
+        close = 16;
       }
-      if (start <= hour && hour < end) {
+      if (start <= hour && hour < end && hour < close) {
         if (timedata == hour) {
+          if (data.roomId === 24) {
+            console.log(timedata, hour);
+          }
+
           cnt += 1;
         }
       }
