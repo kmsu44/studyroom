@@ -52,6 +52,9 @@ const Datecontainer = props => {
   useEffect(() => {
     setChoicedate(props.date);
   }, []);
+  const close = () => {
+    props.toggleModal();
+  };
   const quit = () => {
     props.toggleModal();
     if (Choice_date === '') return;
@@ -77,7 +80,12 @@ const Datecontainer = props => {
   const timelist = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>날짜</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={styles.title}>날짜</Text>
+        <TouchableOpacity onPress={() => close()}>
+          <MaterialCommunityIcons name={'close'} color={'black'} size={20} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.week}>
         {props.week.map((weekDay, index) => {
           const daybox = [styles.day];
